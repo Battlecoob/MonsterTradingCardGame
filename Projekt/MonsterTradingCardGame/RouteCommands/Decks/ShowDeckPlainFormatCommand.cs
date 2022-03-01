@@ -20,8 +20,8 @@ namespace MonsterTradingCardGame.RouteCommands
 
         public override Response Execute()
         {
-            string str = "";
             var response = new Response();
+            string str = "";
 
             foreach (Card card in repoManager.GetCardsInDeck(User.Token))
                 str += card.ToString() + "\n";

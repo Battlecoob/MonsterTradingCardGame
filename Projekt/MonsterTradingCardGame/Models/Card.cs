@@ -52,5 +52,10 @@ namespace MonsterTradingCardGame.Models
             {"RegularSpell", Species.none},
             {"WaterGoblin", Species.goblin},
         };
+
+        public override string ToString() 
+        { 
+            return $"Id: {Id}, Name: {Name}, Damage: {Damage}; "; 
+        }
     }
 }

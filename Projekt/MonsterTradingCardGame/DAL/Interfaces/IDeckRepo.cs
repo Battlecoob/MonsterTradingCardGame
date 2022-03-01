@@ -11,6 +11,6 @@ namespace MonsterTradingCardGame.DAL
     {
         Deck SelectDeck(string authToken);
         void UpdateDeck(string authToken, List<string> cardIds);
-        int InsertDeck(string authToken, List<string> cardIds); // rename
+        int InsertDeck(string authToken, List<string> cardIds);
     }
 }
