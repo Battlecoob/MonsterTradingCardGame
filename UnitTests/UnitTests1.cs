@@ -104,12 +104,6 @@ namespace UnitTests
                 testCard1, testCard2, testCard3, testCard4, testCard5
             };
 
-            //testCards.Add(testCard1);
-            //testCards.Add(testCard2);
-            //testCards.Add(testCard3);
-            //testCards.Add(testCard4);
-            //testCards.Add(testCard5);
-
             testPackage = new Package
             {
                 Id = 1,
@@ -206,6 +200,36 @@ namespace UnitTests
 
         [Test] // 9
         public void TestAcquirePackage()
+        {
+        }
+
+        [Test] // 10
+        public void TestDeckCreation()
+        {
+        }
+
+        [Test] // 11
+        public void TestUpdateDeck()
+        {
+        }
+
+        [Test] // 12
+        public void TestShowDeck()
+        {
+        }
+
+        [Test] // 13
+        public void TestIfDeckExists()
+        {
+        }
+
+        [Test] // 14
+        public void TestShowUserData()
+        {
+        }
+
+        [Test] // 15
+        public void TestUpdateUserData()
         {
         }
     }
