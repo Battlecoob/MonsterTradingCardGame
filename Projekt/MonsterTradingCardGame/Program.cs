@@ -51,6 +51,7 @@ namespace MonsterTradingCardGame
             router.AddProtectedRoute(HttpMethod.Post, "/packages", (r, p) => new CreatePackageCommand(repoManager, Deserialize<List<Card>>(r.Payload)));
             // acquire package
             router.AddProtectedRoute(HttpMethod.Post, "/transactions/packages", (r, p) => new AcquirePackageCommand(repoManager));
+            
             //---------------------- Card/Deck Routes ----------------------------
             // show acquired cards
             router.AddProtectedRoute(HttpMethod.Get, "/cards", (r, p) => new ShowCardsCommand(repoManager));
@@ -60,8 +61,8 @@ namespace MonsterTradingCardGame
             router.AddProtectedRoute(HttpMethod.Put, "/deck", (r, p) => new ConfigureDeckCommand(repoManager, Deserialize<List<string>>(r.Payload)));
             // show deck -> plain format
             router.AddProtectedRoute(HttpMethod.Get, "/deck\\?format=plain", (r, p) => new ShowDeckPlainFormatCommand(repoManager));
+           
             //---------------------- User Data Routes ----------------------------
-            // ???????????????????????????????????? show and upate both don't work
             // show user data
             router.AddProtectedRoute(HttpMethod.Get, "/users/{id}", (r, p) => new ShowUserDataCommand(repoManager, p["id"]));
             // update user data
@@ -70,6 +71,7 @@ namespace MonsterTradingCardGame
             router.AddProtectedRoute(HttpMethod.Get, "/stats", (r, p) => new ShowUserStatsCommand(repoManager));
             // show scoreboard
             router.AddProtectedRoute(HttpMethod.Get, "/score", (r, p) => new ShowScoreBoardCommand(repoManager));
+
         }
 
         private static T Deserialize<T>(string payload) where T : class

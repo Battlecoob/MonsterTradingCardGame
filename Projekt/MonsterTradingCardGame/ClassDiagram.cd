@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MonsterTradingCardGame.DAL.CardRepo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABRAIgAAFAAABAAAAAAQAAAAAAACAAAEJgA=</HashCode>
+      <FileName>DAL\CardRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.DAL.Database" Collapsed="true">
+    <Position X="30.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAACAAIAAAAAAIAAAAAAAAAAAAAAACAAAAAAJAA=</HashCode>
+      <FileName>DAL\Database.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.DAL.DeckRepo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAACBAAAAAIAAABAAABABAAAAAAAAAIEAAAAAAJAA=</HashCode>
+      <FileName>DAL\DeckRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.DAL.PackageRepo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAQAAAAAAAAIAAABBAAIAAQAAAAAAAAAAkAAAAAJAA=</HashCode>
+      <FileName>DAL\PackageRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.DAL.TradeRepo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="32" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAAAAAApABABgAgAQCAAEAAAAAAAAAAAAAAJIA=</HashCode>
+      <FileName>DAL\TradeRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.DAL.UserRepo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="23.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABACQAoAABQAAgAjwACAMMAAAAAhABQgAoQRwAIJAA=</HashCode>
+      <FileName>DAL\UserRepo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCard.Exceptions.CardAlreadyExistsExcpt" Collapsed="true">
+    <Position X="25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\CardAlreadyExistsExcpt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCard.Exceptions.DatabaseAccessFailedExcpt" Collapsed="true">
+    <Position X="32" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\DatabaseAccessFailedExcpt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCard.Exceptions.UserAlreadyExistsExcpt" Collapsed="true">
+    <Position X="26.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\UserAlreadyExistsExcpt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCard.Exceptions.UserDoesntExistExcpt" Collapsed="true">
+    <Position X="30.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\UserDoesntExistExcpt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCard.Exceptions.UserDoesntHaveCardExcpt" Collapsed="true">
+    <Position X="32" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\UserDoesntHaveCardExcpt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.Card" Collapsed="true">
+    <Position X="23.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAGBACAAAAAAAIAAAgAAAQAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Card.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.Credentials" Collapsed="true">
+    <Position X="28.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Credentials.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.Deck" Collapsed="true">
+    <Position X="23.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\Deck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAACQAACAAAAAAAABAiAACIAEABAAA=</HashCode>
+      <FileName>Models\Package.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.Trading" Collapsed="true">
+    <Position X="23.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAAAAAAAgAAAAAkAAAAAAAAAAAAAAQAAAAABAAA=</HashCode>
+      <FileName>Models\Trading.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.Package" Collapsed="true">
+    <Position X="32" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.UserData" Collapsed="true">
+    <Position X="28.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAQAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\UserData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.UserStats" Collapsed="true">
+    <Position X="25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAgAAAAAQAAAAAAAAAAAAAgAAAIAAAAAAA=</HashCode>
+      <FileName>Models\UserStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.IdentityProvider" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IdentityProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.RepoManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="28.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAAEpABDAUIAAAAAgoAAAAEQAAAAAAAAQCAAAAAJAkE=</HashCode>
+      <FileName>RepoManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.Models.RouteParser" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RouteParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.ShowCardsCommand" Collapsed="true">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Cards\ShowCardsCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.ConfigureDeckCommand" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Decks\ConfigureDeckCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.ShowDeckCommand" Collapsed="true">
+    <Position X="18.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Decks\ShowDeckCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.ShowDeckPlainFormatCommand" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Decks\ShowDeckPlainFormatCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.AcquirePackageCommand" Collapsed="true">
+    <Position X="5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAIAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Packages\AcquirePackageCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.CreatePackageCommand" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAIAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Packages\CreatePackageCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.LoginCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Users\LoginCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.RegisterCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="26.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Users\RegisterCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.ShowScoreBoardCommand" Collapsed="true">
+    <Position X="16.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Users\ShowScoreBoardCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.ShowUserDataCommand" Collapsed="true">
+    <Position X="20.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQgAAAAAAAAAAAAACAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Users\ShowUserDataCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.ShowUserStatsCommand" Collapsed="true">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Users\ShowUserStatsCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.UpdateUserDataCommand" Collapsed="true">
+    <Position X="7.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>RouteCommands\Users\UpdateUserDataCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonsterTradingCardGame.RouteCommands.ProtectedRouteCommand" Collapsed="true">
+    <Position X="10.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>RouteCommands\ProtectedRouteCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MonsterTradingCardGame.Program" Collapsed="true">
+    <Position X="25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAABAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MonsterTradingCardGame.DAL.ICardRepo" Collapsed="true">
+    <Position X="23.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAgAAAAAABAAAAAAAAAAAAAAAAAAEAgA=</HashCode>
+      <FileName>DAL\Interfaces\ICardRepo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MonsterTradingCardGame.DAL.IDeckRepo" Collapsed="true">
+    <Position X="25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAABABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DAL\Interfaces\IDeckRepo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MonsterTradingCardGame.DAL.IPackageRepo" Collapsed="true">
+    <Position X="26.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>DAL\Interfaces\IPackageRepo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MonsterTradingCardGame.DAL.ITradingRepo" Collapsed="true">
+    <Position X="30.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABAAAAAAgAACAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>DAL\Interfaces\ITradingRepo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MonsterTradingCardGame.DAL.IUserRepo" Collapsed="true">
+    <Position X="32" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAQAAgAAgAAAAEAAAAAgAAQgAAQBwAIAAA=</HashCode>
+      <FileName>DAL\Interfaces\IUserRepo.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MonsterTradingCardGame.Models.IRepoManager" Collapsed="true">
+    <Position X="28.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAEpABBAUAAAAAAggAAAAEQAAAAAAAAQAAAAAAJAkE=</HashCode>
+      <FileName>Interfaces\IRepoManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MonsterTradingCard.Models.Enums.CardType" Collapsed="true">
+    <Position X="23.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAIAAAA=</HashCode>
+      <FileName>Models\Enums\CardType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MonsterTradingCard.Models.Enums.Element" Collapsed="true">
+    <Position X="25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAJAAAAAAAAAA=</HashCode>
+      <FileName>Models\Enums\Element.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MonsterTradingCard.Models.Enums.Species" Collapsed="true">
+    <Position X="26.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAGAAABAAAAAAgAACAAAAAAACAAAAAACAA=</HashCode>
+      <FileName>Models\Enums\Species.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -43,7 +43,6 @@ namespace MonsterTradingCardGame.RouteCommands
             {
                 try
                 {
-                    // check if admin wants to add a card, that already exists - must be catched
                     repoManager.CardExists(Cards);
 
                     foreach (Card card in Cards)
@@ -54,7 +53,7 @@ namespace MonsterTradingCardGame.RouteCommands
                     response.StatusCode = StatusCode.Ok;
                     response.Payload = "Package successfully created.";
                 }
-                catch(CardAlreadyExistsExcpt) // e gibt den pfad aus und nicht den mitgegebenen string
+                catch(CardAlreadyExistsExcpt) // e gibt den pfad aus
                 {
                     response.StatusCode = StatusCode.Conflict;
                     response.Payload = "Card already exists.";

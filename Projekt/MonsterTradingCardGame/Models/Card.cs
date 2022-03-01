@@ -52,13 +52,5 @@ namespace MonsterTradingCardGame.Models
             {"RegularSpell", Species.none},
             {"WaterGoblin", Species.goblin},
         };
-
-        public override string ToString() 
-        { 
-            return $"Id: {Id}, Name: {Name}, Damage: {Damage}; "; 
-        }
     }
 }
-
-//[TestCase(30, Element.Normal, CardType.Knight, 20, Element.Water, ExpectedResult = -1)]
-//public int TestCardEffectMonsterAndSpell(byte dmg1, Element element1, CardType cardType1, byte dmg2, Element element2)

@@ -1,0 +1,99 @@
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+######################################################################################################
+-----------------------------  Dokumentation MonsterTradingCardGame  ---------------------------------
+
+Gazzia Fabian
+if20b031
+Git Repo: https://github.com/Battlecoob/MonsterTradingCardGame.git
+Total time spent: ca 40h
+
+######################################################################################################
+
+######################################################################################################
+-----------------------------------------  Design ----------------------------------------------------
+
+Fuer dieses Projekt habe ich drei Solutions (SWE1HttpServer, UnitTests, MonsterTradingCardGame).
+
+
+SWE1HttpServer:
+	Dieser Http Server wurde in den Vorlesungen der Lehrverantstaltung SWEN1 gemeinsam programmiert und durfte deshalb fuer das Semesterprojekt verwendet werden.
+	Ich bin froh, dass dieser "bereit gestellt" wurde und gemeinsam erarbeitet wurde, da uns sehr viel arbeit abgenommen wurde. Lediglich die RouteParser & Identity Klasse mussten mithilfe eines bereits geschriebenen Interfaces selbst programmiert werden.
+
+UnitTests:
+	Diese Solution haust alle Unit tests, welche spaeter naeher beschrieben werden.
+
+MonsterTradingCardGame:
+	Diese Solution beinhaltet den eigentlichen Projektcode (abgesehen vom Http Server). Fuer eine erleichterete Orientierung habe ich meine Files folgend aufgeteilt:
+		DAL: 		Klassen / Interfaces fuer meine Datenbank und Tabellen (User, Card, Deck, Package, Trading [nicht fertig impl.])
+		Exceptions:	Exceptions die im ganzen Code verteilt verwendet werden
+		Interfaces: 	Interfaces, die keinen genaueren Code teil betreffen - beinhaltet eigentlich nur das Interface fuer meinen Repository Manager
+		Models:		restlichen Klassen / Interfaces / Enums fuer den allgemeinen Projektablauf; abgesehen von IdentityProvider, RepoManager und RouteParser
+		RouteCommands:	Klassen fuer die unterschiedlichen Routes
+	
+	Programmaufbau:
+		1) Aufbau / initialisierung der PostgresSQL Datenbank
+		2) Initialisierung vom Repository Manager
+			Dieses Objekt ist zustaendig fuer den Zugriff aller db repositories bzw. die Schnittstelle zwischen den Route Commands und den Datenbanken
+		3) Initialisierung von IdentityProvider, RouteParser und Router
+			Die Interfaces fuer diese Klassen wurden gemeinsam im Unterricht erarbeitet
+		4) Registrierung der verfuegbaren Route Commands
+		5) Initialisierung und Start des Http Servers
+
+	Projekt Status:
+		Fertig implementiert:
+			User Registrierung
+			User Login
+			Package Erstellung
+			Package Erwerb
+			Karten Anzeige
+			Deck Anzeige (in zwei Formaten moeglich)
+			Deck Configuration
+			User Daten Anzeige
+			User Daten Veraenderung
+			User Statistik Anzeige
+			Scoreboard Anzeige - nach Elo gereiht
+
+		Nicht implementiert:
+			Trading von Karten
+			Gesamtes Battle und jegliche Funktionen / Ablaeufe, die damit einhergehen
+			Unique Feature
+
+------------------------------------------------------------------------------------------------------
+######################################################################################################
+
+######################################################################################################
+-------------------------------------  Lessons learned -----------------------------------------------
+
+Mein groesstes Problem an diesem Projekt war meine eigene Zeiteinteilung und Prokastination. Letztes hang damit zusammen, da ich von Anfang an von der groesse des Projektes eingeschuechter war. Gemeinsam mit 
+dem restlichen Stress von anderen Verantstaltungn war es einfacher, sich auf andere Taetigkeiten zu konzentrieren, als sich hinzusetzen und das Projekt in kleinere managbare Teile zu brechen.
+
+Das hat dazu gefuehrt, dass ich dieses Projekt eigentlich ausschliesslich im ersten Monat der Berufspraxisphase geschrieben habe, sprich am Abend nach meinen Arbeitstagen bzw am Wochenende obwohl ich hier
+fuer einen anderen Arbeitgeber gearbeitet habe. Das bedeutet, dass ich selten laenger als 2h hintereinander an dem Proejekt gearbeitet habe und immer wieder mich neu einarbeiten musste, da ich entweder vergessen habe
+wo ich aufgehoert habe oder einfach meinen Faden verloren habe und unnoetig viel Zeit verschwendet habe.
+
+Ausserdem war das Card Game mein bisher groesstes Projekt war und ich wie gesagt gelernt habe, dieses effektiver in kleinere Einzelteile zu brechen, da sonst die Groesse einfach erdrueckend wirkt.
+
+Da ich bisher auch keine Erfahrung in C# direkt hatte habe ich natuerlich auch viel zur Programmiersprache selsbt gelernt. Ich hab mich relativ schnell hineingearbeitet, da viele Aehnlichkeiten zu meiner preferierten Sprache C++ existieren.
+Ebenfalls habe ich auch die Effektivitaet von Exceptions gelernt, da ich sie bis jetzt nur in Ausnahefaellen verwendet habe.
+
+------------------------------------------------------------------------------------------------------
+######################################################################################################
+
+######################################################################################################
+----------------------------------  Unit Testing decisions  ------------------------------------------
+
+Da ich im Endeffekt nur die Haelfte des eigentlichen Projektes fertig implementiert habe, viel es mir schwer 20 Tests einfallen zu lassen, die unterschiedliche Dinge testen.
+Im Endeffekt habe ich mich auf das Testen meiner Repository Klasse konzentriert, da diese den Grossteil des Projektablaufs beinhaltet. Begonnen habe ich mit Tests zur Erstellung und Login von Usern, dann Decks und Karten, 
+die Aenderung und Anzeige von User Daten und Stats und zu guter letzt die richtige Darstellung des Scoreboards, da dieses schliesslich nach ELO sortiert werden sollte
+
+------------------------------------------------------------------------------------------------------
+######################################################################################################
+
+######################################################################################################
+--------------------------------------  Unique feature  ----------------------------------------------
+
+Leider habe ich kein unique features in meiner Abgabe.
+
+------------------------------------------------------------------------------------------------------
+######################################################################################################
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

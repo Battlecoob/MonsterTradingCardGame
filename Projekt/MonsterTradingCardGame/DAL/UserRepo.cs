@@ -22,7 +22,7 @@ namespace MonsterTradingCardGame.DAL
                                                     username varchar                not null,
                                                     password varchar                not null,
                                                     token    varchar                not null,
-                                                    user_id  serial
+                                                    user_id  serial 
                                                         constraint users_pk         primary key,
                                                     image    text,
                                                     bio      text,
@@ -103,7 +103,6 @@ namespace MonsterTradingCardGame.DAL
             {
                 command.Parameters.AddWithValue("token", authToken);
 
-                // take the first row, if any
                 mutex.WaitOne();
                 using var reader = command.ExecuteReader();
                 mutex.ReleaseMutex();
@@ -130,7 +129,6 @@ namespace MonsterTradingCardGame.DAL
             }
             catch (PostgresException)
             {
-                // could happen if user already exists
             }
             finally
             {

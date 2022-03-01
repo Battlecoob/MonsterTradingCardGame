@@ -22,8 +22,8 @@ namespace MonsterTradingCardGame.RouteCommands
 
         public override Response Execute()
         {
-            var response = new Response();
             Package package = null;
+            var response = new Response();
 
             package = repoManager.GetFirstPack();
 

@@ -4,7 +4,6 @@ namespace MonsterTradingCardGame.Models
 {
     public class Trading
     {
-        // wieso nullable?
         public string Id { get; set; }
         public int? MinDmg { get; set; }
         public string Token { get; set; }

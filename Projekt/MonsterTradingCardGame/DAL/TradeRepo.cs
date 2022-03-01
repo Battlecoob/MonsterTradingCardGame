@@ -20,7 +20,7 @@ namespace MonsterTradingCardGame.DAL
 
         private const string _createTable = @"create table if not exists trading
                                                 (
-                                                    trading_id  text not null
+                                                    trading_id  text not null 
                                                         constraint trading_pk
                                                             primary key,
                                                     cardtotrade text not null
@@ -47,11 +47,11 @@ namespace MonsterTradingCardGame.DAL
                                                     on trading (trading_id);
                                                 ";
 
-        private const string _selectTrading = "SELECT * FROM trading";
-        private const string _selectTradingById= "SELECT * FROM trading WHERE trading_id=@trading_id";
-        private const string _selectTradingByCardId = "SELECT * FROM trading WHERE cardtotrade=@card_id";
-        private const string _deleteTradingByIdAndToken = "DELETE FROM trading WHERE trading_id=@trading_id AND usertoken=@usertoken";
-        private const string _insertTrading = "INSERT INTO trading (trading_id, usertoken, cardtotrade, mindmg, element, cardtype, species) VALUES (@trading_id, @usertoken, @cardtotrade, @mindmg, @element, @cardtype, @species)";
+        private const string _selectTrade                   = "SELECT * FROM trading";
+        private const string _selectTradeByCardId           = "SELECT * FROM trading WHERE cardtotrade=@card_id";
+        private const string _selectTradeById               = "SELECT * FROM trading WHERE trading_id=@trading_id";
+        private const string _deleteTradeByIdAndToken       = "DELETE FROM trading WHERE trading_id=@trading_id AND usertoken=@usertoken";
+        private const string _insertTrade                   = "INSERT INTO trading (trading_id, usertoken, cardtotrade, mindmg, element, cardtype, species) VALUES (@trading_id, @usertoken, @cardtotrade, @mindmg, @element, @cardtype, @species)";
 
         public TradeRepo(NpgsqlConnection connection, Mutex mutex)
         {
@@ -60,14 +60,14 @@ namespace MonsterTradingCardGame.DAL
             CreateTables();
         }
 
-        public IEnumerable<Trading> SelectOpenTrades()
+        public IEnumerable<Trading> SelectTrades()
         {
             var trades = new List<Trading>();
 
-            using (var cmd = new NpgsqlCommand(_selectTrading, _connection))
+            using (var command = new NpgsqlCommand(_selectTrade, _connection))
             {
                 mutex.WaitOne();
-                using var reader = cmd.ExecuteReader();
+                using var reader = command.ExecuteReader();
                 mutex.ReleaseMutex();
 
                 while (reader.Read())
@@ -83,12 +83,12 @@ namespace MonsterTradingCardGame.DAL
         {
             Trading trade = null;
 
-            using (var cmd = new NpgsqlCommand(_selectTradingByCardId, _connection))
+            using (var command = new NpgsqlCommand(_selectTradeByCardId, _connection))
             {
-                cmd.Parameters.AddWithValue("card_id", cardId);
+                command.Parameters.AddWithValue("card_id", cardId);
 
                 mutex.WaitOne();
-                using var reader = cmd.ExecuteReader();
+                using var reader = command.ExecuteReader();
                 mutex.ReleaseMutex();
                 
                 if (reader.Read())
@@ -98,42 +98,40 @@ namespace MonsterTradingCardGame.DAL
             return trade;
         }
 
-        public int InsertTrade(Trading trade, string authToken)
+        public void InsertTrade(Trading trade, string authToken)
         {
-            var affectedRows = 0;
-
             try
             {
-                using var cmd = new NpgsqlCommand(_insertTrading, _connection);
-                cmd.Parameters.AddWithValue("trading_id", trade.Id);
-                cmd.Parameters.AddWithValue("usertoken", authToken);
-                cmd.Parameters.AddWithValue("cardtotrade", trade.Card2Trade);
+                using var command = new NpgsqlCommand(_insertTrade, _connection);
+                command.Parameters.AddWithValue("trading_id", trade.Id);
+                command.Parameters.AddWithValue("usertoken", authToken);
+                command.Parameters.AddWithValue("cardtotrade", trade.Card2Trade);
 
                 if (trade.MinDmg.HasValue)
-                    cmd.Parameters.AddWithValue("mindmg", trade.MinDmg);
+                    command.Parameters.AddWithValue("mindmg", trade.MinDmg);
                 else
-                    cmd.Parameters.AddWithValue("mindmg", DBNull.Value);
+                    command.Parameters.AddWithValue("mindmg", DBNull.Value);
                 //------------------------------------------------------
 
                 if (trade.Type.HasValue)
-                    cmd.Parameters.AddWithValue("cardtype", trade.Type);
+                    command.Parameters.AddWithValue("cardtype", trade.Type);
                 else
-                    cmd.Parameters.AddWithValue("cardtype", DBNull.Value);
+                    command.Parameters.AddWithValue("cardtype", DBNull.Value);
                 //------------------------------------------------------
 
                 if (trade.Element.HasValue)
-                    cmd.Parameters.AddWithValue("element", trade.Element);
+                    command.Parameters.AddWithValue("element", trade.Element);
                 else
-                    cmd.Parameters.AddWithValue("element", DBNull.Value);
+                    command.Parameters.AddWithValue("element", DBNull.Value);
                 //------------------------------------------------------
 
                 if (trade.Species.HasValue)
-                    cmd.Parameters.AddWithValue("species", trade.Species);
+                    command.Parameters.AddWithValue("species", trade.Species);
                 else
-                    cmd.Parameters.AddWithValue("species", DBNull.Value);
+                    command.Parameters.AddWithValue("species", DBNull.Value);
                 
                 mutex.WaitOne();
-                affectedRows = cmd.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
             catch (PostgresException)
             {
@@ -142,22 +140,18 @@ namespace MonsterTradingCardGame.DAL
             {
                 mutex.ReleaseMutex();
             }
-
-            return affectedRows;
         }
 
-        public int DeleteTradeByIdAndToken(string id, string authToken)
+        public void DeleteTradeByIdAndToken(string id, string authToken)
         {
-            var rowsAffected = 0;
-
             try
             {
-                var cmd = new NpgsqlCommand(_deleteTradingByIdAndToken, _connection);
-                cmd.Parameters.AddWithValue("trading_id", id);
-                cmd.Parameters.AddWithValue("usertoken", authToken);
+                var command = new NpgsqlCommand(_deleteTradeByIdAndToken, _connection);
+                command.Parameters.AddWithValue("trading_id", id);
+                command.Parameters.AddWithValue("usertoken", authToken);
 
                 mutex.WaitOne();
-                rowsAffected = cmd.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
             catch (PostgresException)
             {
@@ -166,20 +160,18 @@ namespace MonsterTradingCardGame.DAL
             {
                 mutex.ReleaseMutex();
             }
-
-            return rowsAffected;
         }
 
-        public Trading SelectTradeAndTokenById(string tradingDealId)
+        public Trading SelectTradeById(string tradingDealId)
         {
             Trading trade = null;
 
-            using (var cmd = new NpgsqlCommand(_selectTradingById, _connection))
+            using (var command = new NpgsqlCommand(_selectTradeById, _connection))
             {
-                cmd.Parameters.AddWithValue("trading_id", tradingDealId);
+                command.Parameters.AddWithValue("trading_id", tradingDealId);
                 
                 mutex.WaitOne();
-                using var reader = cmd.ExecuteReader();
+                using var reader = command.ExecuteReader();
                 mutex.ReleaseMutex();
                 
                 if (reader.Read())
@@ -191,10 +183,10 @@ namespace MonsterTradingCardGame.DAL
 
         private void CreateTables()
         {
-            using var cmd = new NpgsqlCommand(_createTable, _connection);
+            using var command = new NpgsqlCommand(_createTable, _connection);
             
             mutex.WaitOne();
-            cmd.ExecuteNonQuery();
+            command.ExecuteNonQuery();
             mutex.ReleaseMutex();
         }
 
@@ -209,6 +201,7 @@ namespace MonsterTradingCardGame.DAL
                 Species = record["species"] is DBNull ? null : (Species)Enum.Parse(typeof(Species), Convert.ToString(record["species"])),
                 Type = record["cardtype"] is DBNull ? null : (CardType)Enum.Parse(typeof(CardType), Convert.ToString(record["cardtype"]))
             };
+
             return trade;
         }
 
@@ -224,6 +217,7 @@ namespace MonsterTradingCardGame.DAL
                 Species = record["species"] is DBNull ? null : (Species)Enum.Parse(typeof(Species), Convert.ToString(record["species"])),
                 Type = record["cardtype"] is DBNull ? null : (CardType)Enum.Parse(typeof(CardType), Convert.ToString(record["cardtype"]))
             };
+
             return trade;
         }
     }

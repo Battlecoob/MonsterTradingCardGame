@@ -23,8 +23,8 @@ namespace MonsterTradingCardGame.RouteCommands
 
         public override Response Execute()
         {
-            var response = new Response();
             int deckId;
+            var response = new Response();
 
             if(cardIds.Count != 4)
             {
@@ -40,11 +40,6 @@ namespace MonsterTradingCardGame.RouteCommands
                     if (!repoManager.UserHasCard(cardId, User.Token))
                         throw new UserDoesntHaveCardExcpt(cardId);
                 }
-
-                // trading
-                //foreach (string cardId in cardIds)
-                //    if (messageManager.CheckCardForTrade(cardId))
-                //        throw new CardIsBeeingTraded(cardId);
 
                 if(repoManager.DeckExists(User.Token))
                 {
@@ -64,11 +59,7 @@ namespace MonsterTradingCardGame.RouteCommands
                 response.StatusCode = StatusCode.NotFound;
                 response.Payload = "User doesn't have this Card: " + e;
             }
-            //catch(CardIsBeeingTraded e)
-            //{
-            //    response.StatusCode = StatusCode.Conflict;
-            //    response.Payload = "User doesn't have this Card: " + e;
-            //}
+
             return response;
         }
     }
