@@ -28,6 +28,7 @@ namespace MonsterTradingCardGame.DAL
                                                     bio      text,
                                                     name     text,
                                                     coins    integer default 20     not null,
+                                                    coinsBought integer default 0   not null,
                                                     wins     integer default 0      not null,
                                                     losses   integer default 0      not null,
                                                     draws    integer default 0      not null,
@@ -47,20 +48,21 @@ namespace MonsterTradingCardGame.DAL
                                                     on users(username);
                                                 ";
 
-        private const string _selectCoins                   = "SELECT coins FROM users WHERE token = @token";
-        private const string _updateCoins                   = "UPDATE users SET coins = coins - 5 WHERE token = @token";
-        private const string _updateStatsDraw               = "UPDATE users SET draws = draws + 1 WHERE token = @token";
-        private const string _selectUser                    = "SELECT username, password FROM users WHERE token = @token";
-        private const string _selectUserDataByUsername      = "SELECT name, bio, image FROM users WHERE username = @username";
-        private const string _updateStatsWinner             = "UPDATE users SET wins = wins + 1, elo = elo + 3 WHERE token = @token";
-        private const string _updateStatsLoser              = "UPDATE users SET losses = losses + 1, elo = elo - 5 WHERE token = @token";
-        private const string _selectUserStats               = "SELECT username, wins, losses, draws, elo FROM users WHERE token = @token";
-        private const string _selectTopElo                  = "SELECT username, wins, losses, draws, elo FROM users ORDER BY elo DESC LIMIT 10;";
-        private const string _updateUserDataByUsername      = "UPDATE users SET name=@name, bio = @bio, image = @image WHERE username = @username";
-        private const string _insertUser                    = "INSERT INTO users(username, password, token) VALUES (@username, @password, @token)";
-        private const string _selectUserByCredentials       = "SELECT username, password FROM users WHERE username = @username AND password = @password";
+        private const string _selectCoins = "SELECT coins FROM users WHERE token = @token";
+        private const string _updateCoins = "UPDATE users SET coins = coins - 5 WHERE token = @token";
+        private const string _updateStatsDraw = "UPDATE users SET draws = draws + 1 WHERE token = @token";
+        private const string _selectUser = "SELECT username, password FROM users WHERE token = @token";
+        private const string _selectUserDataByUsername = "SELECT name, bio, image FROM users WHERE username = @username";
+        private const string _updateStatsWinner = "UPDATE users SET wins = wins + 1, elo = elo + 3 WHERE token = @token";
+        private const string _updateStatsLoser = "UPDATE users SET losses = losses + 1, elo = elo - 5 WHERE token = @token";
+        private const string _selectUserStats = "SELECT username, wins, losses, draws, elo FROM users WHERE token = @token";
+        private const string _selectTopElo = "SELECT username, wins, losses, draws, elo FROM users ORDER BY elo DESC LIMIT 10;";
+        private const string _updateUserDataByUsername = "UPDATE users SET name=@name, bio = @bio, image = @image WHERE username = @username";
+        private const string _insertUser = "INSERT INTO users(username, password, token) VALUES (@username, @password, @token)";
+        private const string _selectUserByCredentials = "SELECT username, password FROM users WHERE username = @username AND password = @password";
+        private const string _buyCoins = "UPDATE users SET timesCoinsGotBought = timesCoinsGotBought + 1, coins = coins + 5 WHERE token = @token";
 
-        private const string _truncateAllTables             = "TRUNCATE TABLE users, cards, decks, packages, trading RESTART IDENTITY;"; // used in unit testing
+        private const string _truncateAllTables = "TRUNCATE TABLE users, cards, decks, packages, trading RESTART IDENTITY;"; // used in unit testing
 
         public UserRepo(NpgsqlConnection connection, Mutex mutex)
         {
@@ -123,7 +125,7 @@ namespace MonsterTradingCardGame.DAL
                 command.Parameters.AddWithValue("username", user.Username);
                 command.Parameters.AddWithValue("password", user.Password);
                 command.Parameters.AddWithValue("token", user.Token);
-                
+
                 mutex.WaitOne();
                 affectedRows = command.ExecuteNonQuery();
             }
@@ -145,11 +147,11 @@ namespace MonsterTradingCardGame.DAL
             using (var command = new NpgsqlCommand(_selectCoins, _connection))
             {
                 command.Parameters.AddWithValue("token", authToken);
-                
+
                 mutex.WaitOne();
                 using var reader = command.ExecuteReader();
                 mutex.ReleaseMutex();
-                
+
                 if (reader.Read())
                     coins = ReadCoins(reader).Coins;
             }
@@ -186,7 +188,7 @@ namespace MonsterTradingCardGame.DAL
                 mutex.WaitOne();
                 using var reader = command.ExecuteReader();
                 mutex.ReleaseMutex();
-                
+
                 if (reader.Read())
                     userStats = ReadUserStats(reader);
             }
@@ -232,12 +234,12 @@ namespace MonsterTradingCardGame.DAL
         public int UpdateStatsLoser(string authToken)
         {
             int affectedRows = 0;
-            
+
             try
             {
                 using var command = new NpgsqlCommand(_updateStatsLoser, _connection);
                 command.Parameters.AddWithValue("token", authToken);
-                
+
                 mutex.WaitOne();
                 affectedRows = command.ExecuteNonQuery();
             }
@@ -255,7 +257,7 @@ namespace MonsterTradingCardGame.DAL
         public int UpdateStatsWinner(string authToken)
         {
             int affectedRows = 0;
-            
+
             try
             {
                 using var command = new NpgsqlCommand(_updateStatsWinner, _connection);
@@ -308,6 +310,11 @@ namespace MonsterTradingCardGame.DAL
             }
 
             return scores;
+        }
+
+        public void BuyCoins()
+        {
+            using var command = new Np
         }
 
         public void TruncateTables()

@@ -27,14 +27,14 @@ namespace MonsterTradingCardGame.RouteCommands
 
             package = repoManager.GetFirstPack();
 
-            if(package == null)
+            if (package == null)
             {
                 response.StatusCode = StatusCode.Conflict;
                 response.Payload = "No packs available.";
                 return response;
             }
 
-            if(!repoManager.CheckCoinAmount(User.Token))
+            if (!repoManager.CheckCoinAmount(User.Token))
             {
                 response.StatusCode = StatusCode.Conflict;
                 response.Payload = "Not enough coins for purchase.";
