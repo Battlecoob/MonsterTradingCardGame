@@ -15,6 +15,17 @@ namespace MonsterTradingCardGame
     {
         static void Main(string[] args)
         {
+            var mainDb = new Database("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mctgdb");
+            var mainIdentityProvider = new IdentityProvider(mainDb.UserRepository);
+            var mainRouteParser = new RouteParser();
+            var mainRouter = new Router(mainRouteParser, mainIdentityProvider);
+
+            // geht auch nicht -> wieder nur eine verbindung ... 
+            //var mtcgManager = new MTCG();
+            //var mtcgManager.httpServer = new HttpServer(IPAddress.Any, 10001, mainRouter);
+            
+
+            /*
             // init db
             var db = new Database("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mctgdb");
 
@@ -34,6 +45,7 @@ namespace MonsterTradingCardGame
             // init server
             var httpServer = new HttpServer(IPAddress.Any, 10001, router);
             httpServer.Start();
+            */
         }
 
         private static void RouteRegistry(Router router, IRepoManager repoManager)
@@ -71,7 +83,7 @@ namespace MonsterTradingCardGame
             router.AddProtectedRoute(HttpMethod.Get, "/stats", (r, p) => new ShowUserStatsCommand(repoManager));
             // show scoreboard
             router.AddProtectedRoute(HttpMethod.Get, "/score", (r, p) => new ShowScoreBoardCommand(repoManager));
-            // buy coins
+            // buy coins - NOT FINISHED
             router.AddProtectedRoute(HttpMethod.Post, "/transactions/coins", (r, p) => new AcquireCoinsCommand(repoManager));
         }
 
