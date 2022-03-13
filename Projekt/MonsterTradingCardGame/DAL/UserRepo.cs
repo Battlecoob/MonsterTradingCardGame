@@ -71,13 +71,13 @@ namespace MonsterTradingCardGame.DAL
             CreateTables();
         }
 
-        private void CreateTables()
+        private async void CreateTables()
         {
-            using var command = new NpgsqlCommand(_createTables, _connection);
+            await using var command = new NpgsqlCommand(_createTables, _connection);
 
-            mutex.WaitOne();
+            // mutex.WaitOne();
             command.ExecuteNonQuery();
-            mutex.ReleaseMutex();
+            // mutex.ReleaseMutex();
         }
 
         public User GetUserByCredentials(string username, string password)
@@ -88,9 +88,9 @@ namespace MonsterTradingCardGame.DAL
                 command.Parameters.AddWithValue("username", username);
                 command.Parameters.AddWithValue("password", password);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 using var reader = command.ExecuteReader();
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
 
                 if (reader.Read())
                     user = ReadUser(reader);
@@ -105,9 +105,9 @@ namespace MonsterTradingCardGame.DAL
             {
                 command.Parameters.AddWithValue("token", authToken);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 using var reader = command.ExecuteReader();
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
 
                 if (reader.Read())
                     user = ReadUser(reader);
@@ -126,7 +126,7 @@ namespace MonsterTradingCardGame.DAL
                 command.Parameters.AddWithValue("password", user.Password);
                 command.Parameters.AddWithValue("token", user.Token);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 affectedRows = command.ExecuteNonQuery();
             }
             catch (PostgresException)
@@ -134,7 +134,7 @@ namespace MonsterTradingCardGame.DAL
             }
             finally
             {
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
             }
 
             return affectedRows > 0;
@@ -148,9 +148,9 @@ namespace MonsterTradingCardGame.DAL
             {
                 command.Parameters.AddWithValue("token", authToken);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 using var reader = command.ExecuteReader();
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
 
                 if (reader.Read())
                     coins = ReadCoins(reader).Coins;
@@ -167,9 +167,9 @@ namespace MonsterTradingCardGame.DAL
             {
                 command.Parameters.AddWithValue("username", username);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 using var reader = command.ExecuteReader();
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
 
                 if (reader.Read())
                     userData = ReadUserData(reader);
@@ -185,9 +185,9 @@ namespace MonsterTradingCardGame.DAL
             {
                 command.Parameters.AddWithValue("token", authToken);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 using var reader = command.ExecuteReader();
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
 
                 if (reader.Read())
                     userStats = ReadUserStats(reader);
@@ -202,9 +202,9 @@ namespace MonsterTradingCardGame.DAL
                 command.Parameters.AddWithValue("token", authToken);
 
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 command.ExecuteNonQuery();
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
             }
         }
 
@@ -217,7 +217,7 @@ namespace MonsterTradingCardGame.DAL
                 using var command = new NpgsqlCommand(_updateStatsDraw, _connection);
                 command.Parameters.AddWithValue("token", authToken);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 affectedRows = command.ExecuteNonQuery();
             }
             catch (PostgresException)
@@ -225,7 +225,7 @@ namespace MonsterTradingCardGame.DAL
             }
             finally
             {
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
             }
 
             return affectedRows;
@@ -240,7 +240,7 @@ namespace MonsterTradingCardGame.DAL
                 using var command = new NpgsqlCommand(_updateStatsLoser, _connection);
                 command.Parameters.AddWithValue("token", authToken);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 affectedRows = command.ExecuteNonQuery();
             }
             catch (PostgresException)
@@ -248,7 +248,7 @@ namespace MonsterTradingCardGame.DAL
             }
             finally
             {
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
             }
 
             return affectedRows;
@@ -263,7 +263,7 @@ namespace MonsterTradingCardGame.DAL
                 using var command = new NpgsqlCommand(_updateStatsWinner, _connection);
                 command.Parameters.AddWithValue("token", authToken);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 affectedRows = command.ExecuteNonQuery();
             }
             catch (PostgresException)
@@ -271,7 +271,7 @@ namespace MonsterTradingCardGame.DAL
             }
             finally
             {
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
             }
 
             return affectedRows;
@@ -286,9 +286,9 @@ namespace MonsterTradingCardGame.DAL
                 command.Parameters.AddWithValue("image", userData.Image);
                 command.Parameters.AddWithValue("username", username);
 
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 command.ExecuteNonQuery();
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
             }
         }
 
@@ -298,9 +298,9 @@ namespace MonsterTradingCardGame.DAL
 
             using (var command = new NpgsqlCommand(_selectTopElo, _connection))
             {
-                mutex.WaitOne();
+                // mutex.WaitOne();
                 using var reader = command.ExecuteReader();
-                mutex.ReleaseMutex();
+                // mutex.ReleaseMutex();
 
                 while (reader.Read())
                 {
@@ -312,18 +312,18 @@ namespace MonsterTradingCardGame.DAL
             return scores;
         }
 
-        public void BuyCoins()
-        {
-            using var command = new Np
-        }
+        //public void BuyCoins()
+        //{
+        //    using var command = new Np
+        //}
 
         public void TruncateTables()
         {
             using var command = new NpgsqlCommand(_truncateAllTables, _connection);
 
-            mutex.WaitOne();
+            // mutex.WaitOne();
             command.ExecuteNonQuery();
-            mutex.ReleaseMutex();
+            // mutex.ReleaseMutex();
         }
 
         private User ReadUser(IDataRecord dataRecord) // IDataRecord

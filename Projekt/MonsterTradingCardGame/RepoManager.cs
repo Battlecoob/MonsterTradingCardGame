@@ -10,19 +10,31 @@ namespace MonsterTradingCardGame.Models
 {
     public class RepoManager : IRepoManager
     {
+        private readonly Database database;
         private readonly IUserRepo UserRepository;
         private readonly ICardRepo CardRepository;
         private readonly IPackageRepo PackageRepository;
         private readonly IDeckRepo DeckRepository;
         private readonly ITradingRepo TradeRepository;
 
-        public RepoManager(IUserRepo userRepo, ICardRepo cardRepo, IPackageRepo packageRepo, IDeckRepo deckRepo, ITradingRepo tradeRepo)
+        public RepoManager(Database database, IUserRepo userRepo, ICardRepo cardRepo, IPackageRepo packageRepo, IDeckRepo deckRepo, ITradingRepo tradeRepo)
         {
+            this.database = database;
             UserRepository = userRepo;
             CardRepository = cardRepo;
             DeckRepository = deckRepo;
             TradeRepository = tradeRepo;
             PackageRepository = packageRepo;
+        }
+
+        public void OpenConn()
+        {
+            database.Open();
+        }
+
+        public void CloseConn()
+        {
+            database.Close();
         }
 
         public void CreateUser(Credentials credentials)

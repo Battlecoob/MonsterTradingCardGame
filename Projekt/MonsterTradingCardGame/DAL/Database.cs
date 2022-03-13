@@ -13,7 +13,7 @@ namespace MonsterTradingCardGame.DAL
     public class Database
     {
         private static Mutex mutex = new();
-        private readonly NpgsqlConnection _connection;
+        private NpgsqlConnection _connection;
         
         // repos
         public IUserRepo UserRepository { get; private set; }
@@ -27,18 +27,32 @@ namespace MonsterTradingCardGame.DAL
             try
             {
                 _connection = new NpgsqlConnection(connection);
-                _connection.Open();
+                Open();
+                Console.WriteLine("test");
+                //_connection.OpenAsync();
 
                 UserRepository = new UserRepo(_connection, mutex);
                 CardRepository = new CardRepo(_connection, mutex);
                 PackageRepository = new PackageRepo(_connection, mutex);
                 DeckRepository = new DeckRepo(_connection, mutex);
                 TradeRepository = new TradeRepo(_connection, mutex);
+                
+                //Close();
             }
             catch (NpgsqlException e)
             {
                 throw new DatabaseAccessFailedExcpt("Database connection / initialisation failed.", e);
             }
+        }
+
+        public async void Open()
+        {
+            await _connection.OpenAsync();
+        }
+
+        public async void Close()
+        {
+            await _connection.CloseAsync();
         }
     }
 }

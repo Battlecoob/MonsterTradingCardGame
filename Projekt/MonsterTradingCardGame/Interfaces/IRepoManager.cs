@@ -9,6 +9,8 @@ namespace MonsterTradingCardGame.Models
 {
     interface IRepoManager
     {
+        public void OpenConn();
+        public void CloseConn();
         public void CreateUser(Credentials credentials);
         public User LoginUser(Credentials credentials);
         public void CardExists(List<Card> cards);

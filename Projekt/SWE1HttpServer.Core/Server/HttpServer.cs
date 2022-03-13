@@ -30,7 +30,8 @@ namespace SWE1HttpServer.Core.Server
             while (isListening)
             {
                 var client = listener.AcceptClient();
-                HandleClient(client);
+                //HandleClient(client);
+                Task.Run(() => HandleClient(client));
             }
         }
 

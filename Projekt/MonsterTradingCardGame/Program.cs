@@ -13,13 +13,24 @@ namespace MonsterTradingCardGame
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             // init db
-            var db = new Database("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mctgdb");
+            string connectionString = "" +
+                "Host=localhost;" +
+                "Port=5432;" + // default
+                "Username=postgres;" +
+                "Password=postgres;" +
+                "Database=mctgdb;" +
+                "Pooling=true;" + // default
+                "MinPoolSize=20;" +
+                //"Connection Idle Lifetime=0;" + // indefinite idle lifetime?
+                "ConnectionLifetime=0;"; // default
+
+            var db = new Database(connectionString);
 
             // init repoManager
-            var repoManager = new RepoManager(db.UserRepository, db.CardRepository, db.PackageRepository, db.DeckRepository, db.TradeRepository);
+            var repoManager = new RepoManager(db, db.UserRepository, db.CardRepository, db.PackageRepository, db.DeckRepository, db.TradeRepository);
 
             // init msg identity privider
             var identityProvider = new IdentityProvider(db.UserRepository);
@@ -33,6 +44,16 @@ namespace MonsterTradingCardGame
 
             // init server
             var httpServer = new HttpServer(IPAddress.Any, 10001, router);
+            
+            /*
+             * FRAGEN AN PAUL
+             * 
+             * Wenn "Task.Run(() => HandleClient(client));" die Funktion asynchron aufrufbar macht, wieso koennen sich 2 clients gleichzeitig verbinden auch wenn nur
+             * "HandleClient(client)";?
+             *
+             * Wenn bei jedem request eine neue db connection aufgebaut wird. wie muessen mutexes dann verwendet werden? Ein zentraler Mutex macht ja wieder alles seriell
+             */
+
             httpServer.Start();
         }
 
