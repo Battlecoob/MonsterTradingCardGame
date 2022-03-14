@@ -1,10 +1,10 @@
 ﻿using MonsterTradingCardGame.DAL;
-using MonsterTradingCard.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MonsterTradingCardGame.Exceptions;
 
 namespace MonsterTradingCardGame.Models
 {
@@ -59,6 +59,11 @@ namespace MonsterTradingCardGame.Models
         public Card GetCardById(string cardId)
         {
             return CardRepository.SelectCardById(cardId);
+        }
+
+        public Card GetCardByIdToken(string cardId, string authToken)
+        {
+            return CardRepository.SelectCardByIdAndToken(cardId, authToken);
         }
 
         public void AddCard(Card card)
@@ -126,6 +131,16 @@ namespace MonsterTradingCardGame.Models
                 cards.Add(CardRepository.SelectCardById(cardId));
 
             return cards;
+        }
+
+        public Deck GetDeck(string authToken)
+        {
+            var deck = DeckRepository.SelectDeck(authToken);
+
+            if (deck != null && deck.CardIds.Count != 4)
+                throw new InvalidDeckExcpt();
+
+            return deck;
         }
 
         public bool UserHasCard(string cardId, string authToken)

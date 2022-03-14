@@ -1,4 +1,4 @@
-@echo off
+ @echo off
 
 REM --------------------------------------------------
 REM Monster Trading Cards Game
@@ -9,7 +9,7 @@ echo.
 
 REM --------------------------------------------------
 echo 1) Create Users (Registration)
-REM Create User
+REM Create 
 curl -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"kienboec\", \"Password\":\"daniel\"}"
 echo.
 curl -X POST http://localhost:10001/users --header "Content-Type: application/json" -d "{\"Username\":\"altenhof\", \"Password\":\"markus\"}"

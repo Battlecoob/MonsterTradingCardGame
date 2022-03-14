@@ -312,11 +312,6 @@ namespace MonsterTradingCardGame.DAL
             return scores;
         }
 
-        public void BuyCoins()
-        {
-            using var command = new Np
-        }
-
         public void TruncateTables()
         {
             using var command = new NpgsqlCommand(_truncateAllTables, _connection);

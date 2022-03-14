@@ -1,4 +1,4 @@
-﻿namespace MonsterTradingCard.Models.Enums
+﻿namespace MonsterTradingCardGame.Models.Enums
 {
     public enum Species
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonsterTradingCard.Exceptions
+namespace MonsterTradingCardGame.Exceptions
 {
     public class UserAlreadyExistsExcpt : Exception
     {

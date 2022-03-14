@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MonsterTradingCard.Exceptions;
+using MonsterTradingCardGame.Exceptions;
 using Npgsql;
 
 

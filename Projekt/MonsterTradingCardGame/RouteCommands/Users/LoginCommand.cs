@@ -1,4 +1,4 @@
-﻿using MonsterTradingCard.Exceptions;
+﻿using MonsterTradingCardGame.Exceptions;
 using MonsterTradingCardGame.Models;
 using SWE1HttpServer.Core.Response;
 using SWE1HttpServer.Core.Routing;

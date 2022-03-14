@@ -3,7 +3,7 @@ using MonsterTradingCardGame.DAL;
 using MonsterTradingCardGame.Models;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using MonsterTradingCard.Exceptions;
+using MonsterTradingCardGame.Exceptions;
 using System.Linq;
 
 namespace UnitTests

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonsterTradingCard.Models;
-using MonsterTradingCard.Exceptions;
+using MonsterTradingCardGame.Models;
+using MonsterTradingCardGame.Exceptions;
 using System.Threading;
 using Npgsql;
-using MonsterTradingCardGame.Models;
 using System.Data;
-using MonsterTradingCard.Models.Enums;
+using MonsterTradingCardGame.Models.Enums;
 
 namespace MonsterTradingCardGame.DAL
 {

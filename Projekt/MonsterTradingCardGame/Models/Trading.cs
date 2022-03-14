@@ -1,4 +1,4 @@
-﻿using MonsterTradingCard.Models.Enums;
+﻿using MonsterTradingCardGame.Models.Enums;
 
 namespace MonsterTradingCardGame.Models
 {
