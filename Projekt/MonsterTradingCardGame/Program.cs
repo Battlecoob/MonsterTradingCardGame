@@ -8,6 +8,7 @@ using SWE1HttpServer.Core.Server;
 using Newtonsoft.Json;
 using SWE1HttpServer.Core.Request;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MonsterTradingCardGame
 {
@@ -15,19 +16,26 @@ namespace MonsterTradingCardGame
     {
         static void Main()
         {
+            var p = new Program();
+            Task.Run(async () => await p.MTCG());
+        }
+
+        public async Task MTCG()
+        {
             // init db
-            string connectionString = "" +
+            string connectionString =
                 "Host=localhost;" +
                 "Port=5432;" + // default
                 "Username=postgres;" +
                 "Password=postgres;" +
                 "Database=mctgdb;" +
                 "Pooling=true;" + // default
-                "MinPoolSize=20;" +
+                "MinPoolSize=0;" +
                 //"Connection Idle Lifetime=0;" + // indefinite idle lifetime?
-                "ConnectionLifetime=0;"; // default
+                "ConnectionLifetime=0;" + // default
+                "Timeout=20;";
 
-            var db = new Database(connectionString);
+            await using Database db = new Database(connectionString);
 
             // init repoManager
             var repoManager = new RepoManager(db, db.UserRepository, db.CardRepository, db.PackageRepository, db.DeckRepository, db.TradeRepository);
@@ -44,7 +52,7 @@ namespace MonsterTradingCardGame
 
             // init server
             var httpServer = new HttpServer(IPAddress.Any, 10001, router);
-            
+
             /*
              * FRAGEN AN PAUL
              * 

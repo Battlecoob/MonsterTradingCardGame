@@ -26,9 +26,9 @@ namespace MonsterTradingCardGame.DAL
         {
             try
             {
-                _connection = new NpgsqlConnection(connection);
-                Open();
+                Task.Run(() => Open(connection));
                 Console.WriteLine("test");
+                Console.ReadLine();
                 //_connection.OpenAsync();
 
                 UserRepository = new UserRepo(_connection, mutex);
@@ -45,8 +45,9 @@ namespace MonsterTradingCardGame.DAL
             }
         }
 
-        public async void Open()
+        public async void Open(string connection)
         {
+            _connection = new NpgsqlConnection(connection);
             await _connection.OpenAsync();
         }
 

@@ -29,7 +29,8 @@ namespace MonsterTradingCardGame.Models
 
         public void OpenConn()
         {
-            database.Open();
+            string t = ""; // delete
+            database.Open(t);
         }
 
         public void CloseConn()
