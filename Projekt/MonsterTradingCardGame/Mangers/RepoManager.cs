@@ -25,6 +25,11 @@ namespace MonsterTradingCardGame.Models
             PackageRepository = packageRepo;
         }
 
+        public void TruncateDB()
+        {
+            UserRepository.TruncateTables();
+        }
+
         public void CreateUser(Credentials credentials)
         {
             var user = new User()

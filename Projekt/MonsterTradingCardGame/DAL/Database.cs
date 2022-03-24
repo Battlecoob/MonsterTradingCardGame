@@ -33,7 +33,7 @@ namespace MonsterTradingCardGame.DAL
                 CardRepository = new CardRepo(_connection, mutex);
                 PackageRepository = new PackageRepo(_connection, mutex);
                 DeckRepository = new DeckRepo(_connection, mutex);
-                TradeRepository = new TradeRepo(_connection, mutex);
+                //TradeRepository = new TradeRepo(_connection, mutex);
             }
             catch (NpgsqlException e)
             {

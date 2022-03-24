@@ -15,8 +15,10 @@ namespace MonsterTradingCardGame
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Start MTCG...");
+            //Console.WriteLine("Started...");
             // init db
-            var db = new Database("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mctgdb");
+            var db = new Database("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mtcg");
 
             // init repoManager
             var repoManager = new RepoManager(db.UserRepository, db.CardRepository, db.PackageRepository, db.DeckRepository, db.TradeRepository);
@@ -33,6 +35,7 @@ namespace MonsterTradingCardGame
 
             // init server
             var httpServer = new HttpServer(IPAddress.Any, 10001, router);
+            Console.WriteLine("Start Server...");
             httpServer.Start();
         }
 
@@ -44,6 +47,8 @@ namespace MonsterTradingCardGame
             router.AddRoute(HttpMethod.Post, "/users", (r, p) => new RegisterCommand(repoManager, Deserialize<Credentials>(r.Payload)));
             // login users
             router.AddRoute(HttpMethod.Post, "/sessions", (r, p) => new LoginCommand(repoManager, Deserialize<Credentials>(r.Payload)));
+            // truncate db
+            router.AddRoute(HttpMethod.Put, "/truncate", (r, p) => new TruncateDBCommand(repoManager));
 
             //######################## Private Routes ############################
             //------------------------ Package Routes ----------------------------
