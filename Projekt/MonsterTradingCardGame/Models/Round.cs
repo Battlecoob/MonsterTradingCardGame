@@ -2,12 +2,19 @@
 
 namespace MonsterTradingCardGame.Models
 {
-    public class Round
+    public struct Round
     {
         public bool Draw { get; set; }
-        public int Number { get; set; }
-        public string Loser { get; set; }
-        public string Winner { get; set; }
-        public List<Player> Players { get; set; }
+        public Player Loser { get; set; }
+        public Player Winner { get; set; }
+        public int RoundNumber { get; set; }
+
+        public Round(int round)
+        {
+            Draw = false;
+            Loser = null;
+            Winner = null;
+            RoundNumber = round;
+        }
     }
 }

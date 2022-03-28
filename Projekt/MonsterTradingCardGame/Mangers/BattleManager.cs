@@ -37,7 +37,47 @@ namespace MonsterTradingCardGame.Mangers
 
         public BattleLog StartBattle()
         {
-            throw new NotImplementedException();
+            var randomNr = new Random();
+
+            for(int roundCount = 1; roundCount <= 100; roundCount++)
+            {
+                // init round
+                var round = new Round(roundCount);
+
+                // init name and card for player 1
+                var tmpCard = _deckPlayer[randomNr.Next() % _deckPlayer.Count];
+                var player = new Player(_playerName, tmpCard);
+
+                // init name and card for player 2
+                tmpCard = _deckEnemy[randomNr.Next() % _deckEnemy.Count];
+                var enemy = new Player(_enemyName, tmpCard);
+
+                if(player.Card.CardType == CardType.spell && enemy.Card.CardType == CardType.spell)
+                {
+                    // element multiplier
+
+                    // set total dmg
+
+                    // cardeffect -> none
+                }
+                else
+                {
+                    // set cardeffect
+
+                    // set total dmg
+                }
+
+                // CardFight();
+                    // Set Winner / Loser / Draw
+                        // Winner gets card
+
+                // update player data
+                // update enemey data
+
+                // log round
+            }
+
+            return _log;
         }
 
         public List<Card> CardSetup(Deck deck)

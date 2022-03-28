@@ -33,8 +33,8 @@ namespace MonsterTradingCardGame.RouteCommands
 
                 if (_queue.Count == 0)
                 {
-                    ManualResetEvent manualResetEvent = new ManualResetEvent(false);
                     BattleLog entry = new BattleLog();
+                    ManualResetEvent manualResetEvent = new ManualResetEvent(false);
                     Action<BattleLog> log = new Action<BattleLog>(a => { entry = a; }); 
                     
                     _queue.Enqueue((User, deckPlayer, manualResetEvent, log));

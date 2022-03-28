@@ -17,6 +17,7 @@ namespace MonsterTradingCardGame.DAL
         private Mutex mutex { get; }
         private readonly NpgsqlConnection _connection;
 
+        // use schemas (?) for element, cardtype und species
         private const string _createTable = @"create table if not exists trading
                                                 (
                                                     trading_id  text not null 
