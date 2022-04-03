@@ -22,9 +22,9 @@ namespace MonsterTradingCardGame.DAL
         UserData SelectUserDataByUsername(string username);
 
         void UpdateCoins(string authToken);
-        int UpdateStatsDraw(string authToken);
-        int UpdateStatsLoser(string authToken);
-        int UpdateStatsWinner(string authToken);
+        void UpdateStatsDraw(string authToken);
+        void UpdateStatsLoser(string authToken);
+        void UpdateStatsWinner(string authToken);
         void UpdateUserData(string username, UserData userData);
 
         void TruncateTables();

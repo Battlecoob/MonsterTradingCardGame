@@ -57,5 +57,35 @@ namespace MonsterTradingCardGame.Models
         { 
             return $"Id: {Id}, Name: {Name}, Damage: {Damage}; "; 
         }
+
+        public double CalculateElementMultiplicator(Element element)
+        {
+            double multiplier = 1;
+
+            switch (this.Element)
+            {
+                case Element.normal:
+                    multiplier = CompareElementEffectiveness(Element.water, Element.fire, element);
+                    break;
+                case Element.fire:
+                    multiplier = CompareElementEffectiveness(Element.normal, Element.water, element);
+                    break;
+                case Element.water:
+                    multiplier = CompareElementEffectiveness(Element.fire, Element.normal, element);
+                    break;
+            }
+
+            return multiplier;
+        }
+
+        private double CompareElementEffectiveness(Element effective, Element ineffective, Element element)
+        {
+            if (element == effective)
+                return 2;
+            else if (element == ineffective)
+                return 0.5;
+            else
+                return 1;
+        }
     }
 }

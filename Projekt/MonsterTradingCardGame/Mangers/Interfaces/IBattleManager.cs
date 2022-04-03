@@ -12,7 +12,12 @@ namespace MonsterTradingCardGame.Mangers
     {
         BattleLog StartBattle();
         List<Card> CardSetup(Deck deck);
-        double CalculateElementMultiplicator(Element element);
-        MonsterSpecialities CalculateSpeciality(Card card1, Card card2);
+        //double CalculateElementMultiplicator(Element element);
+        void CardFight(Player player, Player enemy, Round round);
+        Specialities CalculateSpeciality(Card card1, Card card2);
+        void EnemyWinsRound(Player player, Player enemy, Round round);
+        void PlayerWinsRound(Player player, Player enemy, Round round);
+        void ChangeCards(List<Card> winner, List<Card> loser, Card loserCard);
+        void SetGameEnding(Player winner, Player loser, bool draw, Round round);
     }
 }

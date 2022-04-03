@@ -5,9 +5,10 @@ namespace MonsterTradingCardGame.Models
     public struct Round
     {
         public bool Draw { get; set; }
-        public Player Loser { get; set; }
-        public Player Winner { get; set; }
+        public string Loser { get; set; }
+        public string Winner { get; set; }
         public int RoundNumber { get; set; }
+        public List<Player> Players { get; set; }
 
         public Round(int round)
         {
@@ -15,6 +16,7 @@ namespace MonsterTradingCardGame.Models
             Loser = null;
             Winner = null;
             RoundNumber = round;
+            Players = new List<Player>();
         }
     }
 }

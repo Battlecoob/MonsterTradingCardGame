@@ -18,34 +18,36 @@ namespace MonsterTradingCardGame.DAL
         private readonly NpgsqlConnection _connection;
 
         // use schemas (?) for element, cardtype und species
-        private const string _createTable = @"create table if not exists trading
-                                                (
-                                                    trading_id  text not null 
-                                                        constraint trading_pk
-                                                            primary key,
-                                                    cardtotrade text not null
-                                                        constraint trading_cards_card_id_fk
-                                                            references cards
-                                                            on update cascade on delete cascade,
-                                                    mindmg      integer,
-                                                    element     public.element,
-                                                    cardtype    public.card_type,
-                                                    species     public.species,
-                                                    usertoken   text not null
-                                                        constraint trading_users_token_fk
-                                                            references users (token)
-                                                            on update cascade on delete cascade
-                                                );
+        private const string _createTable = @"create table if not exists trading;";
 
-                                                alter table trading
-                                                    owner to postgres;
+        //private const string _createTable = @"create table if not exists trading
+        //                                        (
+        //                                            trading_id  text not null 
+        //                                                constraint trading_pk
+        //                                                    primary key,
+        //                                            cardtotrade text not null
+        //                                                constraint trading_cards_card_id_fk
+        //                                                    references cards
+        //                                                    on update cascade on delete cascade,
+        //                                            mindmg      integer,
+        //                                            element     public.element,
+        //                                            cardtype    public.card_type,
+        //                                            species     public.species,
+        //                                            usertoken   text not null
+        //                                                constraint trading_users_token_fk
+        //                                                    references users (token)
+        //                                                    on update cascade on delete cascade
+        //                                        );
 
-                                                create unique index if not exists trading_cardtotrade_uindex
-                                                    on trading (cardtotrade);
+        //                                        alter table trading
+        //                                            owner to postgres;
 
-                                                create unique index if not exists trading_trading_id_uindex
-                                                    on trading (trading_id);
-                                                ";
+        //                                        create unique index if not exists trading_cardtotrade_uindex
+        //                                            on trading (cardtotrade);
+
+        //                                        create unique index if not exists trading_trading_id_uindex
+        //                                            on trading (trading_id);
+        //                                        ";
 
         private const string _selectTrade                   = "SELECT * FROM trading";
         private const string _selectTradeByCardId           = "SELECT * FROM trading WHERE cardtotrade=@card_id";

@@ -193,5 +193,19 @@ namespace MonsterTradingCardGame.Models
         {
             return UserRepository.GetTop10UserScore();
         }
+
+        public void UpdateWinnerStat(string authToken)
+        {
+            UserRepository.UpdateStatsWinner(authToken);
+        }
+
+        public void UpdateLoserStat(string authToken)
+        {
+            UserRepository.UpdateStatsLoser(authToken);
+        }
+        public void UpdateDrawStat(string authToken)
+        {
+            UserRepository.UpdateStatsDraw(authToken);
+        }
     }
 }

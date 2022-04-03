@@ -10,11 +10,11 @@ namespace MonsterTradingCardGame.Models
     public class Player
     {
         public Card Card { get; set; }
-        public float Damage { get; set; }
+        public double Damage { get; set; }
         public int CardsLeft { get; set; }
         public string Username { get; set; }
         public double ElementMultiplier { get; set; }
-        public MonsterSpecialities MonsterSpeciality{ get; set; }
+        public Specialities Speciality{ get; set; }
 
         public Player(string name, Card card)
         {
@@ -25,7 +25,7 @@ namespace MonsterTradingCardGame.Models
             CardsLeft = -1;
             Username = name;
             ElementMultiplier = -1;
-            MonsterSpeciality = MonsterSpecialities.none;
+            Speciality = Specialities.none;
         }
     }
 }

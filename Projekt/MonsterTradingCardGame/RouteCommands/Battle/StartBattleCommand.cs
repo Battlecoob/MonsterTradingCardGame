@@ -24,6 +24,7 @@ namespace MonsterTradingCardGame.RouteCommands
 
         public override Response Execute()
         {
+            Console.WriteLine("in startBattle");
             Deck deckPlayer;
 
             try
@@ -35,10 +36,12 @@ namespace MonsterTradingCardGame.RouteCommands
                 {
                     BattleLog entry = new BattleLog();
                     ManualResetEvent manualResetEvent = new ManualResetEvent(false);
-                    Action<BattleLog> log = new Action<BattleLog>(a => { entry = a; }); 
-                    
+                    Action<BattleLog> log = new Action<BattleLog>(a => { entry = a; });
+
                     _queue.Enqueue((User, deckPlayer, manualResetEvent, log));
                     manualResetEvent.WaitOne();
+
+                    Console.WriteLine("after resetEvent");
 
                     return new Response()
                     {
@@ -48,6 +51,7 @@ namespace MonsterTradingCardGame.RouteCommands
                 }
                 else
                 {
+                    Console.WriteLine("second player");
                     (User enemy, Deck deckEnemy, ManualResetEvent manualResetEvent, Action<BattleLog> log) = _queue.Dequeue();
 
                     BattleLog battle = new BattleManager(_repoManager, deckPlayer, User.Username, deckEnemy, enemy.Username).StartBattle();

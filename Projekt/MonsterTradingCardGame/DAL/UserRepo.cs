@@ -208,17 +208,15 @@ namespace MonsterTradingCardGame.DAL
             }
         }
 
-        public int UpdateStatsDraw(string authToken)
+        public void UpdateStatsDraw(string authToken)
         {
-            int affectedRows = 0;
-
             try
             {
                 using var command = new NpgsqlCommand(_updateStatsDraw, _connection);
                 command.Parameters.AddWithValue("token", authToken);
 
                 mutex.WaitOne();
-                affectedRows = command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
             catch (PostgresException)
             {
@@ -227,21 +225,17 @@ namespace MonsterTradingCardGame.DAL
             {
                 mutex.ReleaseMutex();
             }
-
-            return affectedRows;
         }
 
-        public int UpdateStatsLoser(string authToken)
+        public void UpdateStatsLoser(string authToken)
         {
-            int affectedRows = 0;
-
             try
             {
                 using var command = new NpgsqlCommand(_updateStatsLoser, _connection);
                 command.Parameters.AddWithValue("token", authToken);
 
                 mutex.WaitOne();
-                affectedRows = command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
             catch (PostgresException)
             {
@@ -250,21 +244,17 @@ namespace MonsterTradingCardGame.DAL
             {
                 mutex.ReleaseMutex();
             }
-
-            return affectedRows;
         }
 
-        public int UpdateStatsWinner(string authToken)
+        public void UpdateStatsWinner(string authToken)
         {
-            int affectedRows = 0;
-
             try
             {
                 using var command = new NpgsqlCommand(_updateStatsWinner, _connection);
                 command.Parameters.AddWithValue("token", authToken);
 
                 mutex.WaitOne();
-                affectedRows = command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
             catch (PostgresException)
             {
@@ -273,8 +263,6 @@ namespace MonsterTradingCardGame.DAL
             {
                 mutex.ReleaseMutex();
             }
-
-            return affectedRows;
         }
 
         public void UpdateUserData(string username, UserData userData)

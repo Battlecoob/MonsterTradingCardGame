@@ -30,5 +30,8 @@ namespace MonsterTradingCardGame.Models
         Card GetCardByIdToken(string cardId,  string authToken);
         Deck GetDeck(string authToken);
         void TruncateDB();
+        void UpdateWinnerStat(string authToken);
+        void UpdateLoserStat(string authToken);
+        void UpdateDrawStat(string authToken);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace MonsterTradingCardGame.Models.Enums
 {
-    public enum MonsterSpecialities
+    public enum Specialities
     {
         none,
         afraid,
