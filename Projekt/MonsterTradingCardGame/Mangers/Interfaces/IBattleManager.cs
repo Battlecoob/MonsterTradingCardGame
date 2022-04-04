@@ -18,6 +18,6 @@ namespace MonsterTradingCardGame.Mangers
         void EnemyWinsRound(Player player, Player enemy, Round round);
         void PlayerWinsRound(Player player, Player enemy, Round round);
         void ChangeCards(List<Card> winner, List<Card> loser, Card loserCard);
-        void SetGameEnding(Player winner, Player loser, bool draw, Round round);
+        void SetRoundEnding(Player winner, Player loser, bool draw, Round round);
     }
 }

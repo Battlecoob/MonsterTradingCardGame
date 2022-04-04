@@ -43,20 +43,13 @@ namespace MonsterTradingCardGame.Mangers
 
             for (; roundCount < 100; roundCount++)
             {
+                if (_deckPlayer.Count <= 0 || _deckEnemy.Count <= 0)
+                    break;
+
                 // init round
                 var round = new Round(roundCount + 1);
 
                 // init player 1
-
-                /*
-                 * 
-                 * 
-                 * STOPPED HERE: ERROR - "CAN'T DIVIDE WITH 0"
-                 * 
-                 * 
-                */
-
-
                 var tmpCard = _deckEnemy[randomNr.Next() % _deckEnemy.Count];
                 var enemy = new Player(_enemyName, tmpCard);
                 enemy.CardsLeft = _deckEnemy.Count;
@@ -208,7 +201,7 @@ namespace MonsterTradingCardGame.Mangers
                     enemy.Speciality == Specialities.controlled)
             {
                 // set winner -> player, loser -> enemy
-                //SetGameEnding(player, enemy, false, round);
+                //SetRoundEnding(player, enemy, false, round);
                 //ChangeCards(_deckPlayer, _deckEnemy, enemy.Card);
                 PlayerWinsRound(player, enemy, round);
                 return;
@@ -220,7 +213,7 @@ namespace MonsterTradingCardGame.Mangers
                     enemy.Speciality == Specialities.immune)
             {
                 // set winner -> enemy, loser -> player
-                //SetGameEnding(enemy, player, false, round);
+                //SetRoundEnding(enemy, player, false, round);
                 //ChangeCards(_deckEnemy, _deckPlayer, player.Card);
                 EnemyWinsRound(player, enemy, round);
                 return;
@@ -234,7 +227,7 @@ namespace MonsterTradingCardGame.Mangers
                 EnemyWinsRound(player, enemy, round);
 
             else // draw
-                SetGameEnding(player, enemy, true, round);
+                SetRoundEnding(player, enemy, true, round);
 
 
             // old approach
@@ -243,7 +236,7 @@ namespace MonsterTradingCardGame.Mangers
             //    enemy.Speciality == Specialities.immune)
             //{
             //    // set winner -> enemy, loser -> player
-            //    //SetGameEnding(enemy, player, false, round);
+            //    //SetRoundEnding(enemy, player, false, round);
             //    //ChangeCards(_deckEnemy, _deckPlayer, player.Card);
             //    EnemyWinsRound(player, enemy, round);
             //    return;
@@ -253,7 +246,7 @@ namespace MonsterTradingCardGame.Mangers
             //         enemy.Speciality == Specialities.controlled)
             //{
             //    // set winner -> player, loser -> enemy
-            //    //SetGameEnding(player, enemy, false, round);
+            //    //SetRoundEnding(player, enemy, false, round);
             //    //ChangeCards(_deckPlayer, _deckEnemy, enemy.Card);
             //    PlayerWinsRound(player, enemy, round);
             //    return;
@@ -275,7 +268,7 @@ namespace MonsterTradingCardGame.Mangers
                 }
                 else // draw
                 {
-                    SetGameEnding(player, enemy, true, round);
+                    SetRoundEnding(player, enemy, true, round);
                     // Cards don't change holder because of the draw.
                     return;
                 }
@@ -298,19 +291,19 @@ namespace MonsterTradingCardGame.Mangers
 
         public void PlayerWinsRound(Player player, Player enemy, Round round)
         {
-            SetGameEnding(player, enemy, false, round);
+            SetRoundEnding(player, enemy, false, round);
             ChangeCards(_deckPlayer, _deckEnemy, enemy.Card);
             return;
         }
 
         public void EnemyWinsRound(Player player, Player enemy, Round round)
         {
-            SetGameEnding(enemy, player, false, round);
+            SetRoundEnding(enemy, player, false, round);
             ChangeCards(_deckEnemy, _deckPlayer, player.Card);
             return;
         }
 
-        public void SetGameEnding(Player winner, Player loser, bool draw, Round round)
+        public void SetRoundEnding(Player winner, Player loser, bool draw, Round round)
         {
             if(!draw)
             {
@@ -340,6 +333,9 @@ namespace MonsterTradingCardGame.Mangers
 
             foreach (string cardId in deck.CardIds)
                 cards.Add(_repoManager.GetCardByIdToken(cardId, deck.Token));
+
+            //Card testCard = _repoManager.GetCardById("845f0dc7-37d0-426e-994e-43fc3ac83c08");
+            //cards.Add(testCard);
 
             return cards;
         }
