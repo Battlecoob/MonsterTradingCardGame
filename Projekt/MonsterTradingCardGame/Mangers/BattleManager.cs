@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTradingCardGame.Mangers
+namespace MonsterTradingCardGame.Managers
 {
     public class BattleManager : IBattleManager
     {

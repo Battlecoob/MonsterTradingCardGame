@@ -1,13 +1,14 @@
 ﻿using MonsterTradingCardGame.DAL;
 using SWE1HttpServer.Core.Authentication;
 using SWE1HttpServer.Core.Request;
+using MonsterTradingCardGame.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonsterTradingCardGame.Models
+namespace MonsterTradingCardGame.Managers
 {
     class IdentityProvider : IIdentityProvider
     {

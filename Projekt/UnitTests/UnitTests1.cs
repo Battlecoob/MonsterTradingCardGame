@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using MonsterTradingCardGame.DAL;
+using MonsterTradingCardGame.Managers;
 using MonsterTradingCardGame.Models;
+using MonsterTradingCardGame.Models.Enums;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using MonsterTradingCardGame.Exceptions;
@@ -11,8 +13,19 @@ namespace UnitTests
     public class Tests
     {
         // 'mctgdbtest' (db just for testing) instead of 'mctgdb' throws excpt at connection; couldn't figure out why
-        static Database testDb = new Database("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mctgdb");
+        static Database testDb = new Database("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mtcg");
+
+
+        /* AENDERN! */
+        static List<string> deck1CardIds = new List<string> { "deck1-card1", "deck1-card2", "deck1-card3", "deck1-card4" };
+        static Deck deck1 = new Deck { Id = 1, Token = "username-1-mtcgToken", CardIds = deck1CardIds };
+        static string username1 = "username-1";
+        static List<string> deck2CardIds = new List<string> { "deck2-card1", "deck2-card2", "deck2-card3", "deck2-card4" };
+        static Deck deck2 = new Deck { Id = 2, Token = "username-2-mtcgToken", CardIds = deck2CardIds };
+        static string username2 = "username-2";
+
         static RepoManager testRepoManager = new RepoManager(testDb.UserRepository, testDb.CardRepository, testDb.PackageRepository, testDb.DeckRepository, testDb.TradeRepository);
+        static BattleManager testBattleManager = new BattleManager(testRepoManager, deck1, username1, deck2, username2);
 
         static private Package testPackage;
         static private List<Card> testCards;
@@ -63,14 +76,14 @@ namespace UnitTests
             testCard2 = new Card
             {
                 Id = testCardIds[1],
-                Name = "WaterGoblin",
+                Name = "FireElf",
                 Damage = 10.0
             };
 
             testCard3 = new Card
             {
                 Id = testCardIds[2],
-                Name = "WaterGoblin",
+                Name = "Ork",
                 Damage = 10.0
             };
 
@@ -392,6 +405,57 @@ namespace UnitTests
             var data = testRepoManager.GetUserStats(testUser1.Token);
 
             Assert.AreEqual(JsonConvert.SerializeObject(data), JsonConvert.SerializeObject(testUserStats));
+        }
+
+        [Test]
+        [TestCase("Dragon", "WaterGoblin", ExpectedResult = Specialities.none )]
+        [TestCase("WaterGoblin", "Dragon", ExpectedResult = Specialities.afraid )]
+        [TestCase("Wizzard", "Ork", ExpectedResult = Specialities.none )]
+        [TestCase("Ork", "Wizzard", ExpectedResult = Specialities.controlled )]
+        [TestCase("WaterSpell", "Knight", ExpectedResult = Specialities.none )]
+        [TestCase("Knight", "WaterSpell", ExpectedResult = Specialities.drowned )]
+        [TestCase("Kraken", "FireSpell", ExpectedResult = Specialities.immune )]
+        [TestCase("Kraken", "WaterSpell", ExpectedResult = Specialities.immune )]
+        [TestCase("FireSpell", "Kraken", ExpectedResult = Specialities.none )]
+        [TestCase("Kraken", "RegularSpell", ExpectedResult = Specialities.immune )]
+        [TestCase("WaterSpell", "Kraken", ExpectedResult = Specialities.none )]
+        [TestCase("RegularSpell", "Kraken", ExpectedResult = Specialities.none )]
+        [TestCase("Dragon", "FireElf", ExpectedResult = Specialities.none )]
+        [TestCase("FireElf", "Dragon", ExpectedResult = Specialities.friend )]
+        public Specialities TestSpecialities(string card1Name, string card2Name)
+        {
+            var card1 = new Card { Name = card1Name };
+            var card2 = new Card { Name = card2Name };
+            Specialities speciality = testBattleManager.CalculateSpeciality(card1, card2);
+
+            return speciality;
+        }
+
+        [Test]
+        [TestCase(Element.fire, ExpectedResult = (double) 2)]
+        [TestCase(Element.normal, ExpectedResult = (double) 0.5)]
+        [TestCase(Element.water, ExpectedResult = (double) 1)]
+        public double TestBattleElementMultiplierWater(Element element)
+        {
+            return testCard1.CalculateElementMultiplicator(element);
+        }
+
+        [Test]
+        [TestCase(Element.fire, ExpectedResult = (double) 1)]
+        [TestCase(Element.normal, ExpectedResult = (double) 2)]
+        [TestCase(Element.water, ExpectedResult = (double) 0.5)]
+        public double TestBattleElementMultiplierFire(Element element)
+        {
+            return testCard2.CalculateElementMultiplicator(element);
+        }
+
+        [Test]
+        [TestCase(Element.fire, ExpectedResult = (double) 0.5)]
+        [TestCase(Element.normal, ExpectedResult = (double) 1)]
+        [TestCase(Element.water, ExpectedResult = (double) 2)]
+        public double TestBattleElementMultiplierNormal(Element element)
+        {
+            return testCard3.CalculateElementMultiplicator(element);
         }
     }
 }

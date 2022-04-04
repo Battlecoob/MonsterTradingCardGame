@@ -8,6 +8,7 @@ using SWE1HttpServer.Core.Server;
 using Newtonsoft.Json;
 using SWE1HttpServer.Core.Request;
 using System.Collections.Generic;
+using MonsterTradingCardGame.Managers;
 
 namespace MonsterTradingCardGame
 {
