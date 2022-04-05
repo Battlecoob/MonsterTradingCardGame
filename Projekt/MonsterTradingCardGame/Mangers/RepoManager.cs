@@ -208,5 +208,10 @@ namespace MonsterTradingCardGame.Managers
         {
             UserRepository.UpdateStatsDraw(authToken);
         }
+
+        public IEnumerable<Trade> CheckTradingDeals()
+        {
+            return TradeRepository.SelectTrades();
+        }
     }
 }

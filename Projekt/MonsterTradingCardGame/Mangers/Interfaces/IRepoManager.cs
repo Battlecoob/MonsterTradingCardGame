@@ -33,5 +33,6 @@ namespace MonsterTradingCardGame.Models
         void UpdateWinnerStat(string authToken);
         void UpdateLoserStat(string authToken);
         void UpdateDrawStat(string authToken);
+        public IEnumerable<Trade> CheckTradingDeals();
     }
 }

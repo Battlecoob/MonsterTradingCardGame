@@ -1,5 +1,6 @@
 ﻿using MonsterTradingCardGame.Exceptions;
 using MonsterTradingCardGame.Models;
+using Newtonsoft.Json;
 using SWE1HttpServer.Core.Response;
 using SWE1HttpServer.Core.Routing;
 using System;
@@ -10,40 +11,23 @@ using System.Threading.Tasks;
 
 namespace MonsterTradingCardGame.RouteCommands
 {
-    class AcquirePackageCommand : ProtectedRouteCommand
+    class CheckTradingDealsCommand : ProtectedRouteCommand
     {
         private readonly IRepoManager repoManager;
-        public List<Card> Cards { get; private set; }
 
-        public AcquirePackageCommand(IRepoManager repoManager)
+        public CheckTradingDealsCommand(IRepoManager repoManager)
         {
             this.repoManager = repoManager;
         }
 
         public override Response Execute()
         {
-            Package package = null;
             var response = new Response();
 
-            package = repoManager.GetFirstPack();
-
-            if (package == null)
-            {
-                response.StatusCode = StatusCode.Conflict;
-                response.Payload = "No packs available.";
-                return response;
-            }
-
-            if (!repoManager.CheckCoinAmount(User.Token))
-            {
-                response.StatusCode = StatusCode.Conflict;
-                response.Payload = "Not enough coins for purchase.";
-                return response;
-            }
-
-            repoManager.AcquirePackage(package, User.Token);
-            response.StatusCode = StatusCode.Ok;
-            response.Payload = "Package sucessfully purchased.";
+            if ((response.Payload = JsonConvert.SerializeObject(repoManager.CheckTradingDeals())) != null)
+                response.StatusCode = StatusCode.Ok;
+            else
+                response.StatusCode = StatusCode.NotFound;
 
             return response;
         }

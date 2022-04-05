@@ -2,7 +2,7 @@
 
 namespace MonsterTradingCardGame.Models
 {
-    public class Trading
+    public class Trade
     {
         public string Id { get; set; }
         public int? MinDmg { get; set; }

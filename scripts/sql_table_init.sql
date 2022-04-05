@@ -1,16 +1,9 @@
-create type element as enum ('fire', 'water', 'normal');
+CREATE TYPE element AS ENUM ('fire', 'water', 'normal');
+CREATE TYPE type AS ENUM ('spell', 'monster');
+CREATE TYPE species AS ENUM ('elf', 'ork', 'none', 'dragon', 'goblin', 'knight', 'kraken', 'wizzard');
 
-alter type element owner to postgres;
 
-create type species as enum ('goblin', 'drache', 'zauberer', 'ork', 'ritter', 'kraken', 'elfe');
-
-alter type species owner to postgres;
-
-create type card_type as enum ('monster', 'spell');
-
-alter type card_type owner to postgres;
-
-create table users
+CREATE TABLE users
 (
     username varchar             not null,
     password varchar             not null,
@@ -28,19 +21,19 @@ create table users
     elo      integer default 100 not null
 );
 
-alter table users
+ALTER TABLE users
     owner to postgres;
 
-create unique index users_user_id_uindex
+CREATE unique index users_user_id_uindex
     on users (user_id);
 
-create unique index users_token_uindex
+CREATE unique index users_token_uindex
     on users (token);
 
-create unique index users_username_uindex
+CREATE unique index users_username_uindex
     on users (username);
 
-create table cards
+CREATE TABLE cards
 (
     card_id text    not null
         constraint cards_pk
@@ -54,10 +47,10 @@ create table cards
             deferrable initially deferred
 );
 
-alter table cards
+ALTER TABLE cards
     owner to postgres;
 
-create table packages
+CREATE TABLE packages
 (
     package_id serial
         primary key,
@@ -81,25 +74,25 @@ create table packages
             on update cascade on delete cascade
 );
 
-alter table packages
+ALTER TABLE packages
     owner to postgres;
 
-create unique index packages_card1_uindex
+CREATE unique index packages_card1_uindex
     on packages (card1_id);
 
-create unique index packages_card2_uindex
+CREATE unique index packages_card2_uindex
     on packages (card2_id);
 
-create unique index packages_card3_uindex
+CREATE unique index packages_card3_uindex
     on packages (card3_id);
 
-create unique index packages_card4_uindex
+CREATE unique index packages_card4_uindex
     on packages (card4_id);
 
-create unique index packages_card5_uindex
+CREATE unique index packages_card5_uindex
     on packages (card5_id);
 
-create table decks
+CREATE TABLE decks
 (
     deck_id  serial
         constraint decks_pk
@@ -126,28 +119,28 @@ create table decks
             on update cascade on delete cascade
 );
 
-alter table decks
+ALTER TABLE decks
     owner to postgres;
 
-create unique index decks_card1_id_uindex
+CREATE unique index decks_card1_id_uindex
     on decks (card1_id);
 
-create unique index decks_card2_id_uindex
+CREATE unique index decks_card2_id_uindex
     on decks (card2_id);
 
-create unique index decks_card3_id_uindex
+CREATE unique index decks_card3_id_uindex
     on decks (card3_id);
 
-create unique index decks_card4_id_uindex
+CREATE unique index decks_card4_id_uindex
     on decks (card4_id);
 
-create unique index decks_deck_id_uindex
+CREATE unique index decks_deck_id_uindex
     on decks (deck_id);
 
-create unique index decks_user_id_uindex
+CREATE unique index decks_user_id_uindex
     on decks (token);
 
-create table trading
+CREATE TABLE trading
 (
     trading_id  text not null
         constraint trading_pk
@@ -166,12 +159,12 @@ create table trading
             on update cascade on delete cascade
 );
 
-alter table trading
+ALTER TABLE trading
     owner to postgres;
 
-create unique index trading_cardtotrade_uindex
+CREATE unique index trading_cardtotrade_uindex
     on trading (cardtotrade);
 
-create unique index trading_trading_id_uindex
+CREATE unique index trading_trading_id_uindex
     on trading (trading_id);
 

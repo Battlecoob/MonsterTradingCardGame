@@ -251,40 +251,40 @@ echo .
 
 read -p "Press any key to resume ..."
 
-# --------------------------------------------------
-echo "17) battle"
-start /b "kienboec battle" curl -i -X POST http://localhost:10001/battles --header "Authorization: Basic kienboec-mtcgToken"
-start /b "altenhof battle" curl -i -X POST http://localhost:10001/battles --header "Authorization: Basic altenhof-mtcgToken"
-ping localhost -n 10 >NUL 2>NUL
+# # --------------------------------------------------
+# echo "17) battle"
+# start /b "kienboec battle" curl -i -X POST http://localhost:10001/battles --header "Authorization: Basic kienboec-mtcgToken"
+# start /b "altenhof battle" curl -i -X POST http://localhost:10001/battles --header "Authorization: Basic altenhof-mtcgToken"
+# ping localhost -n 10 >NUL 2>NUL
 
-read -p "Press any key to resume ..."
-
-# --------------------------------------------------
-echo "18) Stats "
-echo kienboec
-curl -i -X GET http://localhost:10001/stats --header "Authorization: Basic kienboec-mtcgToken"
-echo .
-echo altenhof
-curl -i -X GET http://localhost:10001/stats --header "Authorization: Basic altenhof-mtcgToken"
-echo .
-echo .
-
-read -p "Press any key to resume ..."
-
-# --------------------------------------------------
-echo "19) scoreboard"
-curl -i -X GET http://localhost:10001/score --header "Authorization: Basic kienboec-mtcgToken"
-echo .
-echo .
-
-read -p "Press any key to resume ..."
+# read -p "Press any key to resume ..."
 
 # # --------------------------------------------------
-# echo 20) trade
-# echo check trading deals
+# echo "18) Stats "
+# echo kienboec
+# curl -i -X GET http://localhost:10001/stats --header "Authorization: Basic kienboec-mtcgToken"
+# echo .
+# echo altenhof
+# curl -i -X GET http://localhost:10001/stats --header "Authorization: Basic altenhof-mtcgToken"
+# echo .
+# echo .
+
+# read -p "Press any key to resume ..."
+
+# # --------------------------------------------------
+# echo "19) scoreboard"
+# curl -i -X GET http://localhost:10001/score --header "Authorization: Basic kienboec-mtcgToken"
+# echo .
+# echo .
+
+# read -p "Press any key to resume ..."
+
+# # --------------------------------------------------
+# echo "20) trade"
+# echo "check trading deals"
 # curl -i -X GET http://localhost:10001/tradings --header "Authorization: Basic kienboec-mtcgToken"
 # echo .
-# echo create trading deal
+# echo "create trading deal"
 # curl -i -X POST http://localhost:10001/tradings --header "Content-Type: application/json" --header "Authorization: Basic kienboec-mtcgToken" -d "{\"Id\": \"6cd85277-4590-49d4-b0cf-ba0a921faad0\", \"CardToTrade\": \"1cb6ab86-bdb2-47e5-b6e4-68c5ab389334\", \"Type\": \"monster\", \"MinimumDamage\": 15}"
 # echo .
 
