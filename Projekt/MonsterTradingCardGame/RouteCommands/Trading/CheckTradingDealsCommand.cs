@@ -23,11 +23,15 @@ namespace MonsterTradingCardGame.RouteCommands
         public override Response Execute()
         {
             var response = new Response();
+            response.Payload = JsonConvert.SerializeObject(repoManager.CheckTradingDeals());
 
-            if ((response.Payload = JsonConvert.SerializeObject(repoManager.CheckTradingDeals())) != null)
-                response.StatusCode = StatusCode.Ok;
-            else
+            if (response.Payload == "[]")
+            {
+                response.Payload = "No Trades found.";
                 response.StatusCode = StatusCode.NotFound;
+            }
+            else
+                response.StatusCode = StatusCode.Ok;
 
             return response;
         }

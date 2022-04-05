@@ -85,6 +85,7 @@ namespace MonsterTradingCardGame
 
             //------------------------- Trading Routes ---------------------------
             router.AddProtectedRoute(HttpMethod.Get, "/tradings", (r, p) => new CheckTradingDealsCommand(repoManager));
+            router.AddProtectedRoute(HttpMethod.Post, "/tradings", (r, p) => new CreateTradingDealsCommand(repoManager, Deserialize<Trade>(r.Payload)));
         }
 
         private static T Deserialize<T>(string payload) where T : class

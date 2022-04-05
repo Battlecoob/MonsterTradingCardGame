@@ -213,5 +213,20 @@ namespace MonsterTradingCardGame.Managers
         {
             return TradeRepository.SelectTrades();
         }
+
+        public bool CardAndUserExistForTrade(string cardId, string authToken)
+        {
+            return CardRepository.SelectCardByIdAndToken(cardId, authToken) == null ? false : true;
+        }
+
+        public bool CardOpenForTrade(string cardId)
+        {
+            return TradeRepository.SelectTradeByCardId(cardId) == null ? false : true;
+        }
+
+        public void CreateTrade(Trade trade, string authToken)
+        {
+            TradeRepository.InsertTrade(trade, authToken);
+        }
     }
 }

@@ -58,9 +58,9 @@ namespace MonsterTradingCardGame.Models
             return $"Id: {Id}, Name: {Name}, Damage: {Damage}; "; 
         }
 
-        public double CalculateElementMultiplicator(Element element)
+        public float CalculateElementMultiplicator(Element element)
         {
-            double multiplier = 1;
+            float multiplier = 1;
 
             switch (this.Element)
             {
@@ -78,14 +78,14 @@ namespace MonsterTradingCardGame.Models
             return multiplier;
         }
 
-        private double CompareElementEffectiveness(Element effective, Element ineffective, Element element)
+        private float CompareElementEffectiveness(Element effective, Element ineffective, Element element)
         {
             if (element == effective)
-                return 2;
+                return 2f;
             else if (element == ineffective)
-                return 0.5;
+                return 0.5f;
             else
-                return 1;
+                return 1f;
         }
     }
 }

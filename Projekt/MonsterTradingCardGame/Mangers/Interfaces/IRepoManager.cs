@@ -34,5 +34,8 @@ namespace MonsterTradingCardGame.Models
         void UpdateLoserStat(string authToken);
         void UpdateDrawStat(string authToken);
         public IEnumerable<Trade> CheckTradingDeals();
+        bool CardAndUserExistForTrade(string cardId, string authToken);
+        void CreateTrade(Trade trade, string authToken);
+        bool CardOpenForTrade(string cardId);
     }
 }

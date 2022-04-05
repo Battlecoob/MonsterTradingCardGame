@@ -432,27 +432,27 @@ namespace UnitTests
         }
 
         [Test]
-        [TestCase(Element.fire, ExpectedResult = (double) 2)]
-        [TestCase(Element.normal, ExpectedResult = (double) 0.5)]
-        [TestCase(Element.water, ExpectedResult = (double) 1)]
+        [TestCase(Element.fire, ExpectedResult = (double) 2f)]
+        [TestCase(Element.normal, ExpectedResult = (double) 0.5f)]
+        [TestCase(Element.water, ExpectedResult = (double) 1f)]
         public double TestBattleElementMultiplierWater(Element element)
         {
             return testCard1.CalculateElementMultiplicator(element);
         }
 
         [Test]
-        [TestCase(Element.fire, ExpectedResult = (double) 1)]
-        [TestCase(Element.normal, ExpectedResult = (double) 2)]
-        [TestCase(Element.water, ExpectedResult = (double) 0.5)]
+        [TestCase(Element.fire, ExpectedResult = (double) 1f)]
+        [TestCase(Element.normal, ExpectedResult = (double) 2f)]
+        [TestCase(Element.water, ExpectedResult = (double) 0.5f)]
         public double TestBattleElementMultiplierFire(Element element)
         {
             return testCard2.CalculateElementMultiplicator(element);
         }
 
         [Test]
-        [TestCase(Element.fire, ExpectedResult = (double) 0.5)]
-        [TestCase(Element.normal, ExpectedResult = (double) 1)]
-        [TestCase(Element.water, ExpectedResult = (double) 2)]
+        [TestCase(Element.fire, ExpectedResult = (double) 0.5f)]
+        [TestCase(Element.normal, ExpectedResult = (double) 1f)]
+        [TestCase(Element.water, ExpectedResult = (double) 2f)]
         public double TestBattleElementMultiplierNormal(Element element)
         {
             return testCard3.CalculateElementMultiplicator(element);

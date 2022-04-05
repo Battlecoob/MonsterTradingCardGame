@@ -17,30 +17,29 @@ namespace MonsterTradingCardGame.DAL
         private Mutex mutex { get; }
         private readonly NpgsqlConnection _connection;
 
-        // use schemas (?) for element, cardtype und species
         private const string _createTable = @"create table if not exists trading
-                                                (
-                                                    trading_id  text not null constraint trading_pk primary key,
-                                                    cardtotrade text not null constraint trading_cards_card_id_fk references cards on update cascade on delete cascade,
-                                                    mindmg      integer,
-                                                    element     public.element,
-                                                    cardtype    public.card_type,
-                                                    species     public.species,
-                                                    usertoken   text not null constraint trading_users_token_fk references users (token) on update cascade on delete cascade
-                                                );
+                                            (
+                                                trading_id  text not null constraint trading_pk primary key,
+                                                cardtotrade text not null constraint trading_cards_card_id_fk references cards on update cascade on delete cascade,
+                                                mindmg      integer,
+                                                element     public.cardElementEnum,
+                                                cardtype    public.cardTypeEnum,
+                                                species     public.cardSpeciesEnum,
+                                                usertoken   text not null constraint trading_users_token_fk references users (token) on update cascade on delete cascade
+                                            );
 
-                                                create unique index if not exists trading_cardtotrade_uindex
-                                                    on Trade (cardtotrade);
+                                            create unique index if not exists trading_cardtotrade_uindex
+                                                on trading (cardtotrade);
 
-                                                create unique index if not exists trading_trading_id_uindex
-                                                    on Trade (trading_id);
-                                                ";
+                                            create unique index if not exists trading_trading_id_uindex
+                                                on trading (trading_id);
+                                            ";
 
         private const string _selectTrade                   = "SELECT * FROM trading";
-        private const string _selectTradeByCardId           = "SELECT * FROM Trade WHERE cardtotrade=@card_id";
-        private const string _selectTradeById               = "SELECT * FROM Trade WHERE trading_id=@trading_id";
-        private const string _deleteTradeByIdAndToken       = "DELETE FROM Trade WHERE trading_id=@trading_id AND usertoken=@usertoken";
-        private const string _insertTrade                   = "INSERT INTO Trade (trading_id, usertoken, cardtotrade, mindmg, element, cardtype, species) VALUES (@trading_id, @usertoken, @cardtotrade, @mindmg, @element, @cardtype, @species)";
+        private const string _selectTradeByCardId           = "SELECT * FROM trading WHERE cardtotrade=@card_id";
+        private const string _selectTradeById               = "SELECT * FROM trading WHERE trading_id=@trading_id";
+        private const string _deleteTradeByIdAndToken       = "DELETE FROM trading WHERE trading_id=@trading_id AND usertoken=@usertoken";
+        private const string _insertTrade                   = "INSERT INTO trading (trading_id, usertoken, cardtotrade, mindmg, element, cardtype, species) VALUES (@trading_id, @usertoken, @cardtotrade, @mindmg, @element, @cardtype, @species)";
 
         public TradeRepo(NpgsqlConnection connection, Mutex mutex)
         {
@@ -94,28 +93,28 @@ namespace MonsterTradingCardGame.DAL
                 using var command = new NpgsqlCommand(_insertTrade, _connection);
                 command.Parameters.AddWithValue("trading_id", trade.Id);
                 command.Parameters.AddWithValue("usertoken", authToken);
-                command.Parameters.AddWithValue("cardtotrade", trade.Card2Trade);
+                command.Parameters.AddWithValue("cardtotrade", trade.CardToTrade);
 
-                if (trade.MinDmg.HasValue)
-                    command.Parameters.AddWithValue("mindmg", trade.MinDmg);
+                if (trade.MinimumDamage.HasValue)
+                    command.Parameters.AddWithValue("mindmg", trade.MinimumDamage);
                 else
                     command.Parameters.AddWithValue("mindmg", DBNull.Value);
                 //--------------------------------------------------------------
 
                 if (trade.Type.HasValue)
-                    command.Parameters.AddWithValue("cardtype", trade.Type);
+                    command.Parameters.AddWithValue("cardtype", trade.Type.ToString());
                 else
                     command.Parameters.AddWithValue("cardtype", DBNull.Value);
                 //--------------------------------------------------------------
 
                 if (trade.Element.HasValue)
-                    command.Parameters.AddWithValue("element", trade.Element);
+                    command.Parameters.AddWithValue("element", trade.Element.ToString());
                 else
                     command.Parameters.AddWithValue("element", DBNull.Value);
                 //--------------------------------------------------------------
 
                 if (trade.Species.HasValue)
-                    command.Parameters.AddWithValue("species", trade.Species);
+                    command.Parameters.AddWithValue("species", trade.Species.ToString());
                 else
                     command.Parameters.AddWithValue("species", DBNull.Value);
                 //--------------------------------------------------------------
@@ -185,8 +184,8 @@ namespace MonsterTradingCardGame.DAL
             var trade = new Trade
             {
                 Id = Convert.ToString(record["trading_id"]),
-                Card2Trade = Convert.ToString(record["cardtotrade"]),
-                MinDmg = record["mindmg"] is DBNull ? null : Convert.ToInt32(record["mindmg"]),
+                CardToTrade = Convert.ToString(record["cardtotrade"]),
+                MinimumDamage = record["mindmg"] is DBNull ? null : Convert.ToInt32(record["mindmg"]),
                 Element = record["element"] is DBNull ? null : (Element)Enum.Parse(typeof(Element), Convert.ToString(record["element"])),
                 Species = record["species"] is DBNull ? null : (Species)Enum.Parse(typeof(Species), Convert.ToString(record["species"])),
                 Type = record["cardtype"] is DBNull ? null : (CardType)Enum.Parse(typeof(CardType), Convert.ToString(record["cardtype"]))
@@ -201,8 +200,8 @@ namespace MonsterTradingCardGame.DAL
             {
                 Id = Convert.ToString(record["trading_id"]),
                 Token = Convert.ToString(record["usertoken"]),
-                Card2Trade = Convert.ToString(record["cardtotrade"]),
-                MinDmg = record["mindmg"] is DBNull ? null : Convert.ToInt32(record["mindmg"]),
+                CardToTrade = Convert.ToString(record["cardtotrade"]),
+                MinimumDamage = record["mindmg"] is DBNull ? null : Convert.ToInt32(record["mindmg"]),
                 Element = record["element"] is DBNull ? null : (Element)Enum.Parse(typeof(Element), Convert.ToString(record["element"])),
                 Species = record["species"] is DBNull ? null : (Species)Enum.Parse(typeof(Species), Convert.ToString(record["species"])),
                 Type = record["cardtype"] is DBNull ? null : (CardType)Enum.Parse(typeof(CardType), Convert.ToString(record["cardtype"]))
