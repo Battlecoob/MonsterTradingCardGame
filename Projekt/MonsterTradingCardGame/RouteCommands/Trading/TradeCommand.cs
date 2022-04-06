@@ -48,6 +48,11 @@ namespace MonsterTradingCardGame.RouteCommands
                                 response.Payload = "Internal Server error while trying to trade card.";
                             }
                         }
+                        else
+                        {
+                            response.StatusCode = StatusCode.InternalServerError;
+                            response.Payload = "Card from Trade is not the same as from User.";
+                        }
                     }
                     else
                     {
@@ -72,10 +77,10 @@ namespace MonsterTradingCardGame.RouteCommands
 
         private bool TradeIsValid(Trade trade, Card card)
         {
-            if (trade.Type == card.CardType &&
-                trade.Element == card.Element &&
-                trade.Species == card.Species &&
-                trade.MinimumDamage <= card.Damage)
+            if  (trade.MinimumDamage <= card.Damage &&
+                (trade.Type == card.CardType || trade.Type == null) &&
+                (trade.Element == card.Element || trade.Element == null) &&
+                (trade.Species == card.Species || trade.Species == null))
                 return true;
 
             return false;
