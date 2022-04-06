@@ -9,6 +9,6 @@ namespace MonsterTradingCardGame.DAL
         Trade SelectTradeById(string trade);
         Trade SelectTradeByCardId(string cardId);
         int InsertTrade(Trade trade, string authToken);
-        void DeleteTradeByIdAndToken(string id, string authToken);
+        int DeleteTradeByIdAndToken(string id, string authToken);
     }
 }

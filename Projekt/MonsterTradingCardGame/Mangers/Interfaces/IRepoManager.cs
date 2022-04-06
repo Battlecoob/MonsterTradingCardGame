@@ -37,5 +37,8 @@ namespace MonsterTradingCardGame.Models
         bool CardAndUserExistForTrade(string cardId, string authToken);
         int CreateTrade(Trade trade, string authToken);
         bool CardOpenForTrade(string cardId);
+        bool DeleteTrade(string id, string authToken);
+        Trade GetTrade(string id);
+        void UpdateCardOwner(string id, string authToken);
     }
 }

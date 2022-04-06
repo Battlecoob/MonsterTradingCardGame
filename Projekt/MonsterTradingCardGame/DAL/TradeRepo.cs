@@ -22,9 +22,9 @@ namespace MonsterTradingCardGame.DAL
                                                 trading_id  text not null constraint trading_pk primary key,
                                                 cardtotrade text not null constraint trading_cards_card_id_fk references cards on update cascade on delete cascade,
                                                 mindmg      integer,
-                                                element     public.cardElementEnum,
-                                                cardtype    public.cardTypeEnum,
-                                                species     public.cardSpeciesEnum,
+                                                cardelement integer,
+                                                cardtype    integer,
+                                                cardspecies integer,
                                                 usertoken   text not null constraint trading_users_token_fk references users (token) on update cascade on delete cascade
                                             );
 
@@ -39,7 +39,7 @@ namespace MonsterTradingCardGame.DAL
         private const string _selectTradeByCardId           = "SELECT * FROM trading WHERE cardtotrade=@card_id";
         private const string _selectTradeById               = "SELECT * FROM trading WHERE trading_id=@trading_id";
         private const string _deleteTradeByIdAndToken       = "DELETE FROM trading WHERE trading_id=@trading_id AND usertoken=@usertoken";
-        private const string _insertTrade                   = "INSERT INTO trading (trading_id, cardtotrade, mindmg, element, cardtype, species, usertoken) VALUES (@trading_id, @cardtotrade, @mindmg, @element, @cardtype, @species, @usertoken)";
+        private const string _insertTrade                   = "INSERT INTO trading (trading_id, cardtotrade, mindmg, cardelement, cardtype, cardspecies, usertoken) VALUES (@trading_id, @cardtotrade, @mindmg, @cardelement, @cardtype, @cardspecies, @usertoken)";
 
         public TradeRepo(NpgsqlConnection connection, Mutex mutex)
         {
@@ -103,22 +103,52 @@ namespace MonsterTradingCardGame.DAL
                 //--------------------------------------------------------------
 
                 if (trade.Type.HasValue)
-                    command.Parameters.AddWithValue("cardtype", trade.Type.ToString());
+                    command.Parameters.AddWithValue("cardtype", (int)trade.Type);
                 else
                     command.Parameters.AddWithValue("cardtype", DBNull.Value);
                 //--------------------------------------------------------------
 
                 if (trade.Element.HasValue)
-                    command.Parameters.AddWithValue("element", trade.Element.ToString());
+                    command.Parameters.AddWithValue("cardelement", (int)trade.Element);
                 else
-                    command.Parameters.AddWithValue("element", DBNull.Value);
+                    command.Parameters.AddWithValue("cardelement", DBNull.Value);
                 //--------------------------------------------------------------
 
                 if (trade.Species.HasValue)
-                    command.Parameters.AddWithValue("species", trade.Species.ToString());
+                    command.Parameters.AddWithValue("cardspecies", (int)trade.Species);
                 else
-                    command.Parameters.AddWithValue("species", DBNull.Value);
+                    command.Parameters.AddWithValue("cardspecies", DBNull.Value);
                 //--------------------------------------------------------------
+
+                mutex.WaitOne();
+                rowsAffected = command.ExecuteNonQuery();
+            }
+            catch (PostgresException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                mutex.ReleaseMutex();
+            }
+
+            Console.WriteLine(rowsAffected);
+            return rowsAffected;
+        }
+
+        public int DeleteTradeByIdAndToken(string id, string authToken)
+        {
+            var rowsAffected = 0;
+
+            try
+            {
+                var command = new NpgsqlCommand(_deleteTradeByIdAndToken, _connection);
+                command.Parameters.AddWithValue("trading_id", id);
+                command.Parameters.AddWithValue("usertoken", authToken);
 
                 mutex.WaitOne();
                 rowsAffected = command.ExecuteNonQuery();
@@ -132,26 +162,6 @@ namespace MonsterTradingCardGame.DAL
             }
 
             return rowsAffected;
-        }
-
-        public void DeleteTradeByIdAndToken(string id, string authToken)
-        {
-            try
-            {
-                var command = new NpgsqlCommand(_deleteTradeByIdAndToken, _connection);
-                command.Parameters.AddWithValue("trading_id", id);
-                command.Parameters.AddWithValue("usertoken", authToken);
-
-                mutex.WaitOne();
-                command.ExecuteNonQuery();
-            }
-            catch (PostgresException)
-            {
-            }
-            finally
-            {
-                mutex.ReleaseMutex();
-            }
         }
 
         public Trade SelectTradeById(string tradingDealId)
@@ -189,9 +199,12 @@ namespace MonsterTradingCardGame.DAL
                 Id = Convert.ToString(record["trading_id"]),
                 CardToTrade = Convert.ToString(record["cardtotrade"]),
                 MinimumDamage = record["mindmg"] is DBNull ? null : Convert.ToInt32(record["mindmg"]),
-                Element = record["element"] is DBNull ? null : (Element)Enum.Parse(typeof(Element), Convert.ToString(record["element"])),
-                Species = record["species"] is DBNull ? null : (Species)Enum.Parse(typeof(Species), Convert.ToString(record["species"])),
-                Type = record["cardtype"] is DBNull ? null : (CardType)Enum.Parse(typeof(CardType), Convert.ToString(record["cardtype"]))
+                //Element = record["cardelement"] is DBNull ? null : (Element)Enum.Parse(typeof(Element), Convert.ToString(record["cardelement"])),
+                //Species = record["cardspecies"] is DBNull ? null : (Species)Enum.Parse(typeof(Species), Convert.ToString(record["cardspecies"])),
+                //Type = record["cardtype"] is DBNull ? null : (CardType)Enum.Parse(typeof(CardType), Convert.ToString(record["cardtype"]))
+                Element = record["cardelement"] is DBNull ? null : (Element)Convert.ToInt32(record["cardelement"]),
+                Species = record["cardspecies"] is DBNull ? null : (Species)Convert.ToInt32(record["cardspecies"]),
+                Type = record["cardtype"] is DBNull ? null : (CardType)Convert.ToInt32(record["cardtype"])
             };
 
             return trade;
@@ -205,9 +218,9 @@ namespace MonsterTradingCardGame.DAL
                 Token = Convert.ToString(record["usertoken"]),
                 CardToTrade = Convert.ToString(record["cardtotrade"]),
                 MinimumDamage = record["mindmg"] is DBNull ? null : Convert.ToInt32(record["mindmg"]),
-                Element = record["element"] is DBNull ? null : (Element)Enum.Parse(typeof(Element), Convert.ToString(record["element"])),
-                Species = record["species"] is DBNull ? null : (Species)Enum.Parse(typeof(Species), Convert.ToString(record["species"])),
-                Type = record["cardtype"] is DBNull ? null : (CardType)Enum.Parse(typeof(CardType), Convert.ToString(record["cardtype"]))
+                Element = record["cardelement"] is DBNull ? null : (Element)Convert.ToInt32(record["cardelement"]),
+                Species = record["cardspecies"] is DBNull ? null : (Species)Convert.ToInt32(record["cardspecies"]),
+                Type = record["cardtype"] is DBNull ? null : (CardType)Convert.ToInt32(record["cardtype"])
             };
 
             return trade;

@@ -228,5 +228,21 @@ namespace MonsterTradingCardGame.Managers
         {
             return TradeRepository.InsertTrade(trade, authToken);
         }
+
+        public bool DeleteTrade(string id, string authToken)
+        {
+            return TradeRepository.DeleteTradeByIdAndToken(id, authToken) > 0;
+        }
+
+        public Trade GetTrade(string id)
+        {
+            return TradeRepository.SelectTradeById(id);
+
+        }
+
+        public void UpdateCardOwner(string id, string authToken)
+        {
+            CardRepository.UpdateCardOwner(id, authToken);
+        }
     }
 }
