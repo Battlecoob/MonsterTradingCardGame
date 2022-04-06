@@ -33,10 +33,12 @@ namespace MonsterTradingCardGame.RouteCommands
                 //{
                     if (!repoManager.CardOpenForTrade(trade.CardToTrade))
                     {
-                        repoManager.CreateTrade(trade, User.Token);
+                        if(repoManager.CreateTrade(trade, User.Token) > 0 )
+                        {
+                            response.Payload = "Trade created.";
+                            response.StatusCode = StatusCode.Ok;
+                        }
 
-                        response.Payload = "Trade created.";
-                        response.StatusCode = StatusCode.Ok;
                     }
                     else
                     {

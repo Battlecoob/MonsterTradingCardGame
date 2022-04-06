@@ -39,7 +39,7 @@ namespace MonsterTradingCardGame.DAL
         private const string _selectTradeByCardId           = "SELECT * FROM trading WHERE cardtotrade=@card_id";
         private const string _selectTradeById               = "SELECT * FROM trading WHERE trading_id=@trading_id";
         private const string _deleteTradeByIdAndToken       = "DELETE FROM trading WHERE trading_id=@trading_id AND usertoken=@usertoken";
-        private const string _insertTrade                   = "INSERT INTO trading (trading_id, usertoken, cardtotrade, mindmg, element, cardtype, species) VALUES (@trading_id, @usertoken, @cardtotrade, @mindmg, @element, @cardtype, @species)";
+        private const string _insertTrade                   = "INSERT INTO trading (trading_id, cardtotrade, mindmg, element, cardtype, species, usertoken) VALUES (@trading_id, @cardtotrade, @mindmg, @element, @cardtype, @species, @usertoken)";
 
         public TradeRepo(NpgsqlConnection connection, Mutex mutex)
         {
@@ -86,8 +86,9 @@ namespace MonsterTradingCardGame.DAL
             return trade;
         }
 
-        public void InsertTrade(Trade trade, string authToken)
+        public int InsertTrade(Trade trade, string authToken)
         {
+            int rowsAffected = 0;
             try
             {
                 using var command = new NpgsqlCommand(_insertTrade, _connection);
@@ -120,7 +121,7 @@ namespace MonsterTradingCardGame.DAL
                 //--------------------------------------------------------------
 
                 mutex.WaitOne();
-                command.ExecuteNonQuery();
+                rowsAffected = command.ExecuteNonQuery();
             }
             catch (PostgresException)
             {
@@ -129,6 +130,8 @@ namespace MonsterTradingCardGame.DAL
             {
                 mutex.ReleaseMutex();
             }
+
+            return rowsAffected;
         }
 
         public void DeleteTradeByIdAndToken(string id, string authToken)

@@ -13,8 +13,9 @@ namespace MonsterTradingCardGame.Models
         public double Damage { get; set; }
         public int CardsLeft { get; set; }
         public string Username { get; set; }
-        public double ElementMultiplier { get; set; }
-        public Specialities Speciality{ get; set; }
+        public float ElementMultiplier { get; set; }
+        public Specialities Speciality { get; set; }
+        public string SpecialityString => Speciality.ToString();
 
         public Player(string name, Card card)
         {

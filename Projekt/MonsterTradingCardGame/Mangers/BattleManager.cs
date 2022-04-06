@@ -59,23 +59,12 @@ namespace MonsterTradingCardGame.Managers
                 var player = new Player(_playerName, tmpCard);
                 player.CardsLeft = _deckPlayer.Count;
 
-                if (player.Card.CardType == CardType.spell)
+                if (player.Card.CardType == CardType.spell || enemy.Card.CardType == CardType.spell)
                 {
                     // set element multiplier
                     player.ElementMultiplier = player.Card.CalculateElementMultiplicator(enemy.Card.Element);
                     // set total dmg
                     player.Damage = player.Card.Damage * player.ElementMultiplier;
-                }
-                else // monster
-                {
-                    // set default multiplier
-                    player.ElementMultiplier = 1;
-                    // set total dmg
-                    player.Damage = player.Card.Damage;
-                }
-
-                if(enemy.Card.CardType == CardType.spell)
-                {
                     // set element multiplier
                     enemy.ElementMultiplier = enemy.Card.CalculateElementMultiplicator(player.Card.Element);
                     // set total dmg
@@ -84,16 +73,20 @@ namespace MonsterTradingCardGame.Managers
                 else // monster
                 {
                     // set default multiplier
+                    player.ElementMultiplier = 1;
+                    // set total dmg
+                    player.Damage = player.Card.Damage;
+                    // set default multiplier
                     enemy.ElementMultiplier = 1;
                     // set total dmg
                     enemy.Damage = enemy.Card.Damage;
                 }
 
                 // testen ob reihenfolge der karten param korrekt ist
-                enemy.Speciality = CalculateSpeciality(player.Card, enemy.Card);
-                player.Speciality = CalculateSpeciality(enemy.Card, player.Card);
+                enemy.Speciality = CalculateSpeciality(enemy.Card, player.Card);
+                player.Speciality = CalculateSpeciality(player.Card, enemy.Card);
 
-                CardFight(player, enemy, round);
+                CardFight(player, enemy, ref round);
 
                 // update both player's card data
                 enemy.CardsLeft = _deckEnemy.Count;
@@ -141,7 +134,7 @@ namespace MonsterTradingCardGame.Managers
             return _log;
         }
 
-        public void CardFight(Player player, Player enemy, Round round)
+        public void CardFight(Player player, Player enemy, ref Round round)
         {
             if( player.Damage == -1 ||
                 player.CardsLeft == -1 ||
@@ -202,8 +195,8 @@ namespace MonsterTradingCardGame.Managers
             {
                 // set winner -> player, loser -> enemy
                 //SetRoundEnding(player, enemy, false, round);
-                //ChangeCards(_deckPlayer, _deckEnemy, enemy.Card);
-                PlayerWinsRound(player, enemy, round);
+                //ChangeCards(ref _deckPlayer, ref _deckEnemy, enemy.Card);
+                PlayerWinsRound(player, enemy, ref round);
                 return;
             }
             else if(player.Speciality == Specialities.afraid ||
@@ -213,21 +206,21 @@ namespace MonsterTradingCardGame.Managers
                     enemy.Speciality == Specialities.immune)
             {
                 // set winner -> enemy, loser -> player
-                //SetRoundEnding(enemy, player, false, round);
+                //SetRoundEnding(enemy, player, false, ref round);
                 //ChangeCards(_deckEnemy, _deckPlayer, player.Card);
-                EnemyWinsRound(player, enemy, round);
+                EnemyWinsRound(player, enemy, ref round);
                 return;
             }
 
             // Damage is already correctly set based on CardType (Monster - Spell) and only needs to be compared
             if (player.Damage > enemy.Damage)
-                PlayerWinsRound(player, enemy, round);
+                PlayerWinsRound(player, enemy, ref round);
 
             else if (player.Damage < enemy.Damage)
-                EnemyWinsRound(player, enemy, round);
+                EnemyWinsRound(player, enemy, ref round);
 
             else // draw
-                SetRoundEnding(player, enemy, true, round);
+                SetRoundEnding(player, enemy, true, ref round);
 
 
             // old approach
@@ -236,9 +229,9 @@ namespace MonsterTradingCardGame.Managers
             //    enemy.Speciality == Specialities.immune)
             //{
             //    // set winner -> enemy, loser -> player
-            //    //SetRoundEnding(enemy, player, false, round);
+            //    //SetRoundEnding(enemy, player, false, ref round);
             //    //ChangeCards(_deckEnemy, _deckPlayer, player.Card);
-            //    EnemyWinsRound(player, enemy, round);
+            //    EnemyWinsRound(player, enemy, ref round);
             //    return;
             //}
             //else if (enemy.Speciality == Specialities.afraid ||
@@ -247,8 +240,8 @@ namespace MonsterTradingCardGame.Managers
             //{
             //    // set winner -> player, loser -> enemy
             //    //SetRoundEnding(player, enemy, false, round);
-            //    //ChangeCards(_deckPlayer, _deckEnemy, enemy.Card);
-            //    PlayerWinsRound(player, enemy, round);
+            //    //ChangeCards(ref _deckPlayer, ref _deckEnemy, enemy.Card);
+            //    PlayerWinsRound(player, enemy, ref round);
             //    return;
             //}
 
@@ -258,17 +251,17 @@ namespace MonsterTradingCardGame.Managers
                 // monster fight
                 if(player.Card.Damage > enemy.Card.Damage) // player wins
                 {
-                    PlayerWinsRound(player, enemy, round);
+                    PlayerWinsRound(player, enemy, ref round);
                     return;
                 }
                 else if(player.Card.Damage < enemy.Card.Damage) // enemy wins
                 {
-                    EnemyWinsRound(player, enemy, round);
+                    EnemyWinsRound(player, enemy, ref round);
                     return;
                 }
                 else // draw
                 {
-                    SetRoundEnding(player, enemy, true, round);
+                    SetRoundEnding(player, enemy, true, ref round);
                     // Cards don't change holder because of the draw.
                     return;
                 }
@@ -289,21 +282,21 @@ namespace MonsterTradingCardGame.Managers
             */
         }
 
-        public void PlayerWinsRound(Player player, Player enemy, Round round)
+        public void PlayerWinsRound(Player player, Player enemy, ref Round round)
         {
-            SetRoundEnding(player, enemy, false, round);
-            ChangeCards(_deckPlayer, _deckEnemy, enemy.Card);
+            SetRoundEnding(player, enemy, false, ref round);
+            ChangeCards(ref _deckPlayer, ref _deckEnemy, enemy.Card);
             return;
         }
 
-        public void EnemyWinsRound(Player player, Player enemy, Round round)
+        public void EnemyWinsRound(Player player, Player enemy, ref Round round)
         {
-            SetRoundEnding(enemy, player, false, round);
-            ChangeCards(_deckEnemy, _deckPlayer, player.Card);
+            SetRoundEnding(enemy, player, false, ref round);
+            ChangeCards(ref _deckEnemy, ref _deckPlayer, player.Card);
             return;
         }
 
-        public void SetRoundEnding(Player winner, Player loser, bool draw, Round round)
+        public void SetRoundEnding(Player winner, Player loser, bool draw, ref Round round)
         {
             if(!draw)
             {
@@ -321,7 +314,7 @@ namespace MonsterTradingCardGame.Managers
             return;
         }
 
-        public void ChangeCards(List<Card> winner, List<Card> loser, Card loserCard)
+        public void ChangeCards(ref List<Card> winner, ref List<Card> loser, Card loserCard)
         {
             winner.Add(loserCard);
             loser.Remove(loserCard);

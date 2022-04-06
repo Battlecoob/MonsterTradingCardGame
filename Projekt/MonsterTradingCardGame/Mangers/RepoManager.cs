@@ -224,9 +224,9 @@ namespace MonsterTradingCardGame.Managers
             return TradeRepository.SelectTradeByCardId(cardId) == null ? false : true;
         }
 
-        public void CreateTrade(Trade trade, string authToken)
+        public int CreateTrade(Trade trade, string authToken)
         {
-            TradeRepository.InsertTrade(trade, authToken);
+            return TradeRepository.InsertTrade(trade, authToken);
         }
     }
 }
