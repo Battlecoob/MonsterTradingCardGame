@@ -40,5 +40,6 @@ namespace MonsterTradingCardGame.Models
         bool DeleteTrade(string id, string authToken);
         Trade GetTrade(string id);
         void UpdateCardOwner(string id, string authToken);
+        string GetTokenByUsername(string authToken);
     }
 }

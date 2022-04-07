@@ -57,7 +57,7 @@ namespace MonsterTradingCardGame.RouteCommands
             catch(UserDoesntHaveCardExcpt e)
             {
                 response.StatusCode = StatusCode.NotFound;
-                response.Payload = "User doesn't have this Card: " + e;
+                response.Payload = "User doesn't have this Card: " + e.Message;
             }
 
             return response;

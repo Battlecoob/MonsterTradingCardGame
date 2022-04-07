@@ -244,5 +244,10 @@ namespace MonsterTradingCardGame.Managers
         {
             CardRepository.UpdateCardOwner(id, authToken);
         }
+
+        public string GetTokenByUsername(string authToken)
+        {
+            return UserRepository.GetUserByUsername(authToken);
+        }
     }
 }

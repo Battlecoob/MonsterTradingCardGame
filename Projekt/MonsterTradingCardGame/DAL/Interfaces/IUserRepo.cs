@@ -13,8 +13,9 @@ namespace MonsterTradingCardGame.DAL
 
         //void TruncateAllAndRestartId(string authToken);
 
-        User GetUserByToken(string authToken);
         List<UserStats> GetTop10UserScore();
+        User GetUserByToken(string authToken);
+        string GetUserByUsername(string username);
         User GetUserByCredentials(string username, string password);
 
         int SelectCoins(string authToken);
@@ -26,7 +27,6 @@ namespace MonsterTradingCardGame.DAL
         void UpdateStatsLoser(string authToken);
         void UpdateStatsWinner(string authToken);
         void UpdateUserData(string username, UserData userData);
-
         void TruncateTables();
     }
 }

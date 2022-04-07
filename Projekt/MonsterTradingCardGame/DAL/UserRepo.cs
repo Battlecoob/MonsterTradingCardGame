@@ -60,7 +60,9 @@ namespace MonsterTradingCardGame.DAL
         private const string _updateUserDataByUsername = "UPDATE users SET name=@name, bio = @bio, image = @image WHERE username = @username";
         private const string _insertUser = "INSERT INTO users(username, password, token) VALUES (@username, @password, @token)";
         private const string _selectUserByCredentials = "SELECT username, password FROM users WHERE username = @username AND password = @password";
-        private const string _buyCoins = "UPDATE users SET timesCoinsGotBought = timesCoinsGotBought + 1, coins = coins + 5 WHERE token = @token";
+        //private const string _buyCoins = "UPDATE users SET timesCoinsGotBought = timesCoinsGotBought + 1, coins = coins + 5 WHERE token = @token";
+
+        private const string _getUserByName = "SELECT token FROM users WHERE username = @username";
 
         private const string _truncateAllTables = "TRUNCATE TABLE users, cards, decks, packages, trading RESTART IDENTITY;"; // used in unit testing
 
@@ -366,6 +368,25 @@ namespace MonsterTradingCardGame.DAL
             };
 
             return userData;
+        }
+
+        public string GetUserByUsername(string username)
+        {
+            string token = "";
+
+            using (var command = new NpgsqlCommand(_getUserByName, _connection))
+            {
+                command.Parameters.AddWithValue("username", username);
+
+                mutex.WaitOne();
+                using var reader = command.ExecuteReader();
+                mutex.ReleaseMutex();
+
+                if (reader.Read())
+                    token = Convert.ToString(reader["token"]);
+            }
+
+            return token;
         }
     }
 }

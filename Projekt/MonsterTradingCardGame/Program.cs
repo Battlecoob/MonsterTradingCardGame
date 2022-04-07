@@ -57,7 +57,7 @@ namespace MonsterTradingCardGame
             router.AddProtectedRoute(HttpMethod.Post, "/packages", (r, p) => new CreatePackageCommand(repoManager, Deserialize<List<Card>>(r.Payload)));
             // acquire package
             router.AddProtectedRoute(HttpMethod.Post, "/transactions/packages", (r, p) => new AcquirePackageCommand(repoManager));
-            
+
             //---------------------- Card/Deck Routes ----------------------------
             // show acquired cards
             router.AddProtectedRoute(HttpMethod.Get, "/cards", (r, p) => new ShowCardsCommand(repoManager));
@@ -67,7 +67,7 @@ namespace MonsterTradingCardGame
             router.AddProtectedRoute(HttpMethod.Put, "/deck", (r, p) => new ConfigureDeckCommand(repoManager, Deserialize<List<string>>(r.Payload)));
             // show deck -> plain format
             router.AddProtectedRoute(HttpMethod.Get, "/deck\\?format=plain", (r, p) => new ShowDeckPlainFormatCommand(repoManager));
-           
+
             //---------------------- User Data Routes ----------------------------
             // show user data
             router.AddProtectedRoute(HttpMethod.Get, "/users/{id}", (r, p) => new ShowUserDataCommand(repoManager, p["id"]));
@@ -88,6 +88,9 @@ namespace MonsterTradingCardGame
             router.AddProtectedRoute(HttpMethod.Post, "/tradings", (r, p) => new CreateTradingDealsCommand(repoManager, Deserialize<Trade>(r.Payload)));
             router.AddProtectedRoute(HttpMethod.Delete, "/tradings/{id}", (r, p) => new DeleteTradingDealCommand(repoManager, p["id"]));
             router.AddProtectedRoute(HttpMethod.Post, "/tradings/{id}", (r, p) => new TradeCommand(repoManager, p["id"], Deserialize<string>(r.Payload)));
+
+            //------------------------- Gift Card Routes --------------------------
+            router.AddProtectedRoute(HttpMethod.Post, "/gift/{id}", (r, p) => new GiftCommand(repoManager, p["id"], Deserialize<string>(r.Payload)));
         }
 
         private static T Deserialize<T>(string payload) where T : class
