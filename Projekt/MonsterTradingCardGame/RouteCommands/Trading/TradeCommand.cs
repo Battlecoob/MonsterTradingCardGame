@@ -29,6 +29,8 @@ namespace MonsterTradingCardGame.RouteCommands
                 {
                     if((card = repoManager.GetCardByIdToken(cardId, User.Token)) != null)
                     {
+                        // card must not be in deck
+
                         if(TradeIsValid(trade, card))
                         {
                             repoManager.UpdateCardOwner(trade.CardToTrade, User.Token);

@@ -24,7 +24,7 @@ namespace MonsterTradingCardGame.RouteCommands
             string str = "";
 
             foreach (Card card in repoManager.GetCardsInDeck(User.Token))
-                str += card.ToString() + "\n";
+                str += card + "\n";
 
             if (str == "")
             {

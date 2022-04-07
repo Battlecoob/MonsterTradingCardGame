@@ -51,12 +51,12 @@ namespace MonsterTradingCardGame.Managers
 
                 // init player 1
                 var tmpCard = _deckEnemy[randomNr.Next() % _deckEnemy.Count];
-                var enemy = new Player(_enemyName, tmpCard);
+                Player enemy = new Player(_enemyName, tmpCard);
                 enemy.CardsLeft = _deckEnemy.Count;
 
                 // init player 2
                 tmpCard = _deckPlayer[randomNr.Next() % _deckPlayer.Count];
-                var player = new Player(_playerName, tmpCard);
+                Player player = new Player(_playerName, tmpCard);
                 player.CardsLeft = _deckPlayer.Count;
 
                 if (player.Card.CardType == CardType.spell || enemy.Card.CardType == CardType.spell)
@@ -104,22 +104,22 @@ namespace MonsterTradingCardGame.Managers
 
             if (_deckPlayer.Count <= 0)
             {
-                _log.Winner = _playerName;
-                _log.Loser = _enemyName;
-                _log.Draw = false;
-
-                // repomanager -> update stats
-                _repoManager.UpdateLoserStat(_log.Decks[0].Token);
-                _repoManager.UpdateWinnerStat(_log.Decks[1].Token);
-            }
-            else if (_deckEnemy.Count <= 0)
-            {
                 _log.Winner = _enemyName;
                 _log.Loser = _playerName;
                 _log.Draw = false;
 
+                // repomanager -> update stats
                 _repoManager.UpdateLoserStat(_log.Decks[1].Token);
                 _repoManager.UpdateWinnerStat(_log.Decks[0].Token);
+            }
+            else if (_deckEnemy.Count <= 0)
+            {
+                _log.Winner = _playerName;
+                _log.Loser = _enemyName;
+                _log.Draw = false;
+
+                _repoManager.UpdateLoserStat(_log.Decks[0].Token);
+                _repoManager.UpdateWinnerStat(_log.Decks[1].Token);
             }
             else
             {
@@ -194,8 +194,6 @@ namespace MonsterTradingCardGame.Managers
                     enemy.Speciality == Specialities.controlled)
             {
                 // set winner -> player, loser -> enemy
-                //SetRoundEnding(player, enemy, false, round);
-                //ChangeCards(ref _deckPlayer, ref _deckEnemy, enemy.Card);
                 PlayerWinsRound(player, enemy, ref round);
                 return;
             }
@@ -206,8 +204,6 @@ namespace MonsterTradingCardGame.Managers
                     enemy.Speciality == Specialities.immune)
             {
                 // set winner -> enemy, loser -> player
-                //SetRoundEnding(enemy, player, false, ref round);
-                //ChangeCards(_deckEnemy, _deckPlayer, player.Card);
                 EnemyWinsRound(player, enemy, ref round);
                 return;
             }
@@ -285,14 +281,14 @@ namespace MonsterTradingCardGame.Managers
         public void PlayerWinsRound(Player player, Player enemy, ref Round round)
         {
             SetRoundEnding(player, enemy, false, ref round);
-            ChangeCards(ref _deckPlayer, ref _deckEnemy, enemy.Card);
+            ChangeCards(_deckPlayer, _deckEnemy, enemy.Card);
             return;
         }
 
         public void EnemyWinsRound(Player player, Player enemy, ref Round round)
         {
             SetRoundEnding(enemy, player, false, ref round);
-            ChangeCards(ref _deckEnemy, ref _deckPlayer, player.Card);
+            ChangeCards(_deckEnemy, _deckPlayer, player.Card);
             return;
         }
 
@@ -314,7 +310,7 @@ namespace MonsterTradingCardGame.Managers
             return;
         }
 
-        public void ChangeCards(ref List<Card> winner, ref List<Card> loser, Card loserCard)
+        public void ChangeCards(List<Card> winner, List<Card> loser, Card loserCard)
         {
             winner.Add(loserCard);
             loser.Remove(loserCard);

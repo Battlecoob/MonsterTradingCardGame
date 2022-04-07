@@ -22,11 +22,7 @@ namespace MonsterTradingCardGame.RouteCommands
 
         public override Response Execute()
         {
-            var response = new Response();
-
-
-
-            return response;
+            throw new NotImplementedException();
         }
     }
 }

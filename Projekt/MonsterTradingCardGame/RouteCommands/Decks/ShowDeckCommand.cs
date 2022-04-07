@@ -23,8 +23,10 @@ namespace MonsterTradingCardGame.RouteCommands
             string str = "";
             var response = new Response();
 
-            foreach (Card card in repoManager.GetCardsInDeck(User.Token))
-                str += JsonConvert.SerializeObject(card) + "\n";
+            //foreach (Card card in repoManager.GetCardsInDeck(User.Token))
+            //    str += JsonConvert.SerializeObject(card) + "\n";
+            var cards = repoManager.GetCardsInDeck(User.Token);
+            str = JsonConvert.SerializeObject(cards);
 
             if (str == "")
             {

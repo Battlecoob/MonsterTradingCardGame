@@ -17,7 +17,7 @@ namespace MonsterTradingCardGame.Managers
         Specialities CalculateSpeciality(Card card1, Card card2);
         void EnemyWinsRound(Player player, Player enemy, ref Round round);
         void PlayerWinsRound(Player player, Player enemy, ref Round round);
-        void ChangeCards(ref List<Card> winner, ref List<Card> loser, Card loserCard);
+        void ChangeCards(List<Card> winner, List<Card> loser, Card loserCard);
         void SetRoundEnding(Player winner, Player loser, bool draw, ref Round round);
     }
 }

@@ -14,10 +14,10 @@ namespace MonsterTradingCardGame
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Start MTCG...");
-            //Console.WriteLine("Started...");
+
             // init db
             var db = new Database("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=mtcg");
 
@@ -78,7 +78,7 @@ namespace MonsterTradingCardGame
             // show scoreboard
             router.AddProtectedRoute(HttpMethod.Get, "/score", (r, p) => new ShowScoreBoardCommand(repoManager));
             // buy coins
-            router.AddProtectedRoute(HttpMethod.Post, "/transactions/coins", (r, p) => new AcquireCoinsCommand(repoManager));
+            //router.AddProtectedRoute(HttpMethod.Post, "/transactions/coins", (r, p) => new AcquireCoinsCommand(repoManager));
 
             //------------------------- Battle Routes ----------------------------
             router.AddProtectedRoute(HttpMethod.Post, "/battles", (r, p) => new StartBattleCommand(repoManager));

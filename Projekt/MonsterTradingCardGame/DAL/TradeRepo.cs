@@ -136,7 +136,6 @@ namespace MonsterTradingCardGame.DAL
                 mutex.ReleaseMutex();
             }
 
-            Console.WriteLine(rowsAffected);
             return rowsAffected;
         }
 

@@ -53,11 +53,6 @@ namespace MonsterTradingCardGame.Models
             {"WaterGoblin", Species.goblin},
         };
 
-        public override string ToString() 
-        { 
-            return $"Id: {Id}, Name: {Name}, Damage: {Damage}; "; 
-        }
-
         public float CalculateElementMultiplicator(Element element)
         {
             float multiplier = 1;
@@ -87,5 +82,7 @@ namespace MonsterTradingCardGame.Models
             else
                 return 1f;
         }
+
+        public override string ToString() { return $"Id: {Id},\tName: {Name},\tDamage: {Damage} "; }
     }
 }
