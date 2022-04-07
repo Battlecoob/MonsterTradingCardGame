@@ -2,7 +2,7 @@
 # --------------------------------------------------
 # Monster Trading Cards Game
 # --------------------------------------------------
-title Monster Trading Cards Game
+# title Monster Trading Cards Game
 echo CURL Testing for Monster Trading Cards Game
 echo .
 echo .
@@ -238,3 +238,30 @@ echo .
 echo should fail
 curl -X GET http://localhost:10001/score 
 echo .
+
+# --------------------------------------------------
+echo 17\) trading
+echo delete
+echo should fail: non existing trade
+curl -i -X DELETE http://localhost:10001/tradings/i-dont-exist --header "Authorization: Basic kienboec-mtcgToken"
+echo .
+echo create trade
+curl -i -X POST http://localhost:10001/tradings --header "Content-Type: application/json" --header "Authorization: Basic kienboec-mtcgToken" -d "{\"Id\": \"6cd85277-4590-49d4-b0cf-ba0a921faad0\", \"CardToTrade\": \"1cb6ab86-bdb2-47e5-b6e4-68c5ab389334\", \"Type\": \"monster\", \"MinimumDamage\": 15}"
+echo .
+echo should fail: cannot delete trade another user
+curl -i -X DELETE http://localhost:10001/tradings/6cd85277-4590-49d4-b0cf-ba0a921faad0 --header "Authorization: Basic altenhof-mtcgToken"
+
+
+
+# --------------------------------------------------
+echo 17\) gift card
+curl -i -X POST http://localhost:10001/gift/kienboec --header "Content-Type: application/json" --header "Authorization: Basic altenhof-mtcgToken" -d "\"4ec8b269-0dfa-4f97-809a-2c63fe2a0025\""
+echo .
+echo should fail: card does not exist
+curl -i -X POST http://localhost:10001/gift/kienboec --header "Content-Type: application/json" --header "Authorization: Basic altenhof-mtcgToken" -d "\"card-does-not-exist\""
+echo .
+echo should fail: cannot gift yourself
+curl -i -X POST http://localhost:10001/gift/altenhof --header "Content-Type: application/json" --header "Authorization: Basic altenhof-mtcgToken" -d "\"9e8238a4-8a7a-487f-9f7d-a8c97899eb48\""
+echo .
+echo should fail: user does not exist
+curl -i -X POST http://localhost:10001/gift/someGuy --header "Content-Type: application/json" --header "Authorization: Basic altenhof-mtcgToken" -d "\"9e8238a4-8a7a-487f-9f7d-a8c97899eb48\""
